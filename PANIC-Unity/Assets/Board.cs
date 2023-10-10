@@ -100,7 +100,7 @@ public class NewBehaviourScript : MonoBehaviour
         {
             randomPosition = Random.Range(0, 36);
 
-            if (Piece[randomPosition] != Player)
+            if (Piece[randomPosition] != Player || Piece[randomPosition] != Enemy)
             {
                 SwapPieces(randomPosition, EnemyPosIndex);
                 EnemyPosIndex = randomPosition;
