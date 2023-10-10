@@ -6,9 +6,16 @@ using UnityEngine.UIElements;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    public GameObject BallRed;
-    public GameObject BallCya;
-        
+    public GameObject selection;
+
+    Vector3 selctionTargetPosition = Vector3.zero;
+
+    public GameObject Player;
+    public GameObject Enemy;
+
+    int EnemyPosIndex = 35;
+    int PlayerPosIndex = 0;    
+
     Vector3[] piecePositionLUT = new Vector3[36];
 
     List<GameObject> Piece = new List<GameObject>(36);
@@ -16,7 +23,7 @@ public class NewBehaviourScript : MonoBehaviour
     public Camera Camera;
 
     Vector3 activeGridSelected;
-    int selectionMode = 0; // 0 choose, 1 move
+    int selectionMode = 0; // 0 choose, 1 move, 2 wait
     // Start is called before the first frame update
     void Start()
     {
@@ -31,8 +38,8 @@ public class NewBehaviourScript : MonoBehaviour
             Piece.Add(null);
         }
 
-        Piece[4] = BallRed;
-        Piece[35] = BallCya;
+        Piece[PlayerPosIndex] = Player;
+        Piece[EnemyPosIndex] = Enemy;
     }
     void FixedUpdate()
     {
@@ -43,6 +50,8 @@ public class NewBehaviourScript : MonoBehaviour
                 Piece[i].transform.position = Vector2.Lerp(Piece[i].transform.position, piecePositionLUT[i], 0.2f) + Vector2.up/5;
             }
         }
+
+        selection.transform.position = Vector2.Lerp(selection.transform.position, selctionTargetPosition, 0.2f);
     }
 
     // Update is called once per frame
@@ -52,67 +61,56 @@ public class NewBehaviourScript : MonoBehaviour
 
         Vector3 gridSelected = piecePositionLUT.OrderBy((d) => ((Vector2)d - cursorPos).sqrMagnitude).ToArray()[0];
 
-        
+        selctionTargetPosition = gridSelected;
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (selectionMode == 0) // select
+            if (selectionMode == 0) // move
             {
-                if (Piece[(int)gridSelected.z] != null)
+                if(Piece[(int)gridSelected.z] == null)
                 {
-                    activeGridSelected = gridSelected;
+                    SwapPieces(PlayerPosIndex, (int)gridSelected.z);
+                    PlayerPosIndex = (int)gridSelected.z;
 
-                    Debug.Log("SELECTED");
+                    Debug.Log("MOVED");
 
-                    selectionMode = 1;
+                    selectionMode = 2;
                 }
                 else
                 {
-                    Debug.Log("CANT SELECT");
-                }
-                
-                
-                
-            }
-            else if (selectionMode == 1) // move
-            {
-                if (activeGridSelected != gridSelected)
-                {
-                    if(Piece[(int)gridSelected.z] == null)
-                    {
-                        SwapPieces((int)activeGridSelected.z, (int)gridSelected.z);
-
-                        Debug.Log("MOVED");
-
-                        selectionMode = 0;
-                    }
-                    else
-                    {
-                        Debug.Log("CANT MOVE");
-                    }
-                }
-                else
-                {
-                    Debug.Log("CANCELLED");
-
-                    selectionMode = 0;
+                    Debug.Log("CANT MOVE");
                 }
             }
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (selectionMode == 2)
         {
-            if (selectionMode == 1) // deselect
-            {
-                activeGridSelected = Vector3.zero;
-
-                Debug.Log("DESELECTED");
-
-                selectionMode = 0;
-            }
+            Invoke("EnemyTurn", 0.5f);
+            selectionMode = 3;
         }
 
     }
+    void EnemyTurn()
+    {
+        
+        int randomPosition;
+        bool trigger = true;
+
+        while (trigger)
+        {
+            randomPosition = Random.Range(0, 36);
+
+            if (Piece[randomPosition] != Player)
+            {
+                SwapPieces(randomPosition, EnemyPosIndex);
+                EnemyPosIndex = randomPosition;
+
+                trigger = false;
+            }
+        }
+        selectionMode = 0;
+    }
+
     void SwapPieces(int indexA, int indexB)
     {
         GameObject tmp = Piece[indexA];
