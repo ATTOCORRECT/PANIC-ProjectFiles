@@ -19,8 +19,8 @@ public class Cat : MonoBehaviour
         CatGenerator = FindObjectOfType<CatGenerator>();
         CatColors = FindObjectOfType<CatGenerator>().colors;
 
-        furRender = GetComponent<SpriteRenderer>();
-        splotchRender = transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
+        furRender = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        splotchRender = transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>();
 
         parameters = new int[2];
 
