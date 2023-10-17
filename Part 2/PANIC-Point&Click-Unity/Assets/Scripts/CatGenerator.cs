@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CatGenerator : MonoBehaviour
 {
@@ -38,8 +39,11 @@ public class CatGenerator : MonoBehaviour
         
         for (int i = 0; i < CatAmount; i++)
         {
-
-            CatList[i] = Instantiate(CatPrefab);
+            float y = Random.Range(-5, 5);
+            float x = Random.Range(-5 / 9f * 16f, 5 / 9f * 16f);
+            Vector2 randomPoint = new Vector2(x, y);
+            Debug.Log(randomPoint);
+            CatList[i] = Instantiate(CatPrefab, randomPoint, Quaternion.identity);
 
             if (i == 0) //dedicated target cat
             {
@@ -72,7 +76,7 @@ public class CatGenerator : MonoBehaviour
             if (found)
             {
                 print("found");
-                found = false;
+                Invoke("RestartScene", 1f);
             }
             else
             {
@@ -86,5 +90,9 @@ public class CatGenerator : MonoBehaviour
         found = true;
     }
 
+    void RestartScene()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
    
 }

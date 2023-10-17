@@ -15,6 +15,9 @@ public class CatMovement : MonoBehaviour
     bool run = true;
     void Start()
     {
+        float Y = Random.Range(-5, 5);
+        float x = Random.Range(-5 / 9f * 16f, 5 / 9f * 16f);
+        targetPosition = new Vector2(x, Y);
         Vector3 x0 = targetPosition;
         //compute constants
 
