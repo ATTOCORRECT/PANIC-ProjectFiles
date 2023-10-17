@@ -8,16 +8,31 @@ public class CatGenerator : MonoBehaviour
     public GameObject CatPrefab;
     public GameObject[] CatList;
     public Color32[] colors;
+    public Sprite[] CatPatterns;
 
     public int searchFurColor;
     public int searchSplotchColor;
-    
+    public int searchSplotchPattern;
+
+    bool found = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        searchFurColor = Random.Range(0, colors.Length);
-        searchSplotchColor = Random.Range(0, colors.Length);
-        
+        var availableColors = new List<int> { 0, 1, 2, 3, 4 };
+
+        int randomFurColor = Random.Range(0, colors.Length);
+        searchFurColor = availableColors[randomFurColor];
+        availableColors.Remove(randomFurColor);
+
+        int randomSplotchColor = Random.Range(0, colors.Length - 1);
+        searchSplotchColor = availableColors[randomSplotchColor];
+        availableColors.Remove(randomSplotchColor);
+
+        searchSplotchPattern = Random.Range(0, 5);
+
+        print("searching for " + searchFurColor + " and " + searchSplotchColor + " with " + searchSplotchPattern);
+
         CatList = new GameObject[CatAmount];
 
         
@@ -37,22 +52,38 @@ public class CatGenerator : MonoBehaviour
             }
 
         }
+
+        GameObject LookUpCat = Instantiate(CatPrefab,new Vector2(-7,4), Quaternion.identity);
+        LookUpCat.GetComponent<CatMovement>().enabled = false;
+        LookUpCat.GetComponent<OrderSprites>().enabled = false;
+        LookUpCat.GetComponent<Cat>().enabled = false;
+        LookUpCat.GetComponent<CircleCollider2D>().enabled = false;
+        LookUpCat.transform.GetChild(0).GetComponent<SpriteRenderer>().color = colors[searchFurColor];
+        LookUpCat.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = 10010;
+        LookUpCat.transform.GetChild(1).GetComponent<SpriteRenderer>().color = colors[searchSplotchColor];
+        LookUpCat.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = CatPatterns[searchSplotchPattern];
+        LookUpCat.transform.GetChild(1).GetComponent<SpriteRenderer>().sortingOrder = 10011;
     }
 
-    void IsTargetCat(int[] parameters)
+    private void Update()
     {
-        print("searching for " + searchFurColor + " and " + searchSplotchColor);
-
-        if (parameters[0] == searchFurColor && parameters[1] == searchSplotchColor)
+        if (Input.GetMouseButtonDown(0))
         {
-            print("found");
-
+            if (found)
+            {
+                print("found");
+                found = false;
+            }
+            else
+            {
+                print("Notfound");
+            }
         }
+    }
 
-        else
-        {
-            print("incorrect");
-        }
+    void IsTargetCat()
+    {
+        found = true;
     }
 
    

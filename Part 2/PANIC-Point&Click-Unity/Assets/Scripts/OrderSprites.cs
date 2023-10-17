@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class OrderSprites : MonoBehaviour
 {
-    private SpriteRenderer furRender;
-    private SpriteRenderer splotchRender;
+    [System.NonSerialized]
+    public SpriteRenderer furRender;
+    [System.NonSerialized]
+    public SpriteRenderer splotchRender;
 
     void Start()
     {
         furRender = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        splotchRender = transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>();
+        splotchRender = transform.GetChild(1).GetComponent<SpriteRenderer>();
     }
 
 
     void Update()
     {
         furRender.sortingOrder = (int)(-transform.position.y * 1000);
-        splotchRender.sortingOrder = (int)(-transform.position.y * 1000);
+        splotchRender.sortingOrder = (int)(-transform.position.y * 1000) + 1;
     }
 }

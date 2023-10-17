@@ -9,7 +9,7 @@ public class CatMovement : MonoBehaviour
     Vector3 y, yd;
     float k1, k2, k3;
     public float averageTimeInterval;
-    public float range;
+    public bool canMove = true;
     public float f, z, r;
     Vector2 targetPosition = Vector2.zero;
     bool run = true;
@@ -33,8 +33,6 @@ public class CatMovement : MonoBehaviour
             StartCoroutine(moveTarget(randomTime));
         }
 
-        Debug.DrawLine(Vector2.zero, targetPosition);
-
         // second order dynamics vv
         k1 = z / (Mathf.PI * f);
         k2 = 1 / ((2 * Mathf.PI * f) * (2 * Mathf.PI * f));
@@ -46,7 +44,7 @@ public class CatMovement : MonoBehaviour
         Vector3 xd = (x - xp) / T;
         xp = x;
 
-        float k2Stable = Mathf.Max(k2, T * T / 2 + T * k1 / 2, T*k1);
+        float k2Stable = Mathf.Max(k2, T * T / 2 + T * k1 / 2, T * k1);
         y = y + T * yd;
         yd = yd + T * (x + k3 * xd - y - k1 * yd) / k2;
 
@@ -61,7 +59,17 @@ public class CatMovement : MonoBehaviour
     IEnumerator moveTarget(float time)
     {
         Vector2 currentPoint = targetPosition;
-        Vector2 randomPoint = new Vector2(Random.Range(-range / 9 * 16, range / 9 * 16), Random.Range(-range, range));
+
+        float y = Random.Range(-5, 5);
+        float x = Random.Range(-5 / 9f * 16f, 5 / 9f * 16f);
+
+        if (y > 2)
+        {
+            x = Random.Range((-5 / 9f * 16f) + 3, 5 / 9f * 16f);
+        }
+
+
+        Vector2 randomPoint = new Vector2(x, y);
 
         float loopCount = 20 * time;
         for (int i = 0; i < loopCount; i++)
