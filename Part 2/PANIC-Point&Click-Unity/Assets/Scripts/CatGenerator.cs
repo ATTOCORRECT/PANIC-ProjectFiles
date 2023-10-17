@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class CatGenerator : MonoBehaviour
 {
@@ -15,11 +16,18 @@ public class CatGenerator : MonoBehaviour
     public int searchSplotchColor;
     public int searchSplotchPattern;
 
+    public AudioSource correctSelect;
+    public AudioSource incorrectSelect;
+
+    public TextMeshPro timer;
+
     bool found = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        timer.sortingOrder = 10020;
+
         var availableColors = new List<int> { 0, 1, 2, 3, 4 };
 
         int randomFurColor = Random.Range(0, colors.Length);
@@ -35,6 +43,8 @@ public class CatGenerator : MonoBehaviour
         print("searching for " + searchFurColor + " and " + searchSplotchColor + " with " + searchSplotchPattern);
 
         CatList = new GameObject[CatAmount];
+
+        
 
         
         for (int i = 0; i < CatAmount; i++)
@@ -67,6 +77,8 @@ public class CatGenerator : MonoBehaviour
         LookUpCat.transform.GetChild(1).GetComponent<SpriteRenderer>().color = colors[searchSplotchColor];
         LookUpCat.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = CatPatterns[searchSplotchPattern];
         LookUpCat.transform.GetChild(1).GetComponent<SpriteRenderer>().sortingOrder = 10011;
+
+        StartCoroutine(CountDownTimer(15));
     }
 
     private void Update()
@@ -75,11 +87,17 @@ public class CatGenerator : MonoBehaviour
         {
             if (found)
             {
+                correctSelect.Play();
+
                 print("found");
-                Invoke("RestartScene", 1f);
+                Invoke("RestartScene", 2f);
+
+                
             }
             else
             {
+                incorrectSelect.Play();
+
                 print("Notfound");
             }
         }
@@ -94,5 +112,14 @@ public class CatGenerator : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene");
     }
-   
+
+    IEnumerator CountDownTimer(int startTime)
+    {
+        for (int i = startTime; i >= 0; i--)
+        {
+            timer.text = i.ToString();
+            yield return new WaitForSeconds(1f);
+        }
+        Invoke("RestartScene", 1f);
+    }
 }
