@@ -29,12 +29,17 @@ public class CatData : MonoBehaviour
 
     public void ResetData()
     {
-        data[0] = 0;
+        for (int i = 0; i < data.Length; i++)
+        {
+            data[i] = 0;
+        }
+        RefreshData();
     }
 
     public void RandomizeData()
     {
         data[0] = Random.Range(0, bodyColor.Length);
+        RefreshData();
     }
 
     public void CycleColorR()

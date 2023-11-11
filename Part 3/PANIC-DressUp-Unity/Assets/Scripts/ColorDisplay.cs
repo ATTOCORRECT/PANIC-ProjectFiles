@@ -14,4 +14,9 @@ public class ColorDisplay : MonoBehaviour
     {
         gameObject.GetComponent<SpriteRenderer>().color = Sprite.color;
     }
+
+    public void AnimateReset()
+    {
+        Invoke("RefreshColorDisplay", 0.5f);
+    }
 }
