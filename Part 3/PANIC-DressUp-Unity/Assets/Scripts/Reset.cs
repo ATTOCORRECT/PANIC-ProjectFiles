@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class Reset : MonoBehaviour
 {
+    public GameObject timer;
+    public int resets = 1;
+    public int strikes = 0;
+
     public void ResetSequence()
     {
-        
+
+        resets++;
+        print(resets);
+
         int[] TargetCat = GameObject.Find("Target Cat").GetComponent<CatData>().data;
         int[] CustomCat = GameObject.Find("Custom Cat").GetComponent<CatData>().data;
 
@@ -27,11 +34,14 @@ public class Reset : MonoBehaviour
     {
         gameObject.BroadcastMessage("AnimateReset");
         gameObject.BroadcastMessage("AnimateResetSucess");
+        timer.SendMessage("AdjustTime");
     }
 
     public void ResetFaliure()
     {
         gameObject.BroadcastMessage("AnimateReset");
+        timer.SendMessage("ResetTime");
+        strikes++;
     }
 
     bool AreEqual(int[] A, int[] B)
