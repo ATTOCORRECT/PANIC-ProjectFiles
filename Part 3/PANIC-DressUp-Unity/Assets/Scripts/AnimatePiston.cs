@@ -18,7 +18,7 @@ public class AnimatePiston : MonoBehaviour
 
         for (int i = 0; i < steps; i++)
         {
-            transform.position = Vector2.Lerp(new Vector2(0, 9), new Vector2(0, 3), (i + 1) / steps);
+            transform.position = Vector2.Lerp(new Vector2(0, 6), new Vector2(0, 1.5f), (i + 1) / steps);
 
             yield return new WaitForSeconds(0.02f);
         }
@@ -33,7 +33,7 @@ public class AnimatePiston : MonoBehaviour
 
         for (int i = 0; i < steps; i++)
         {
-            transform.position = Vector2.Lerp(new Vector2(0, 3), new Vector2(0, 9), (i + 1) / steps);
+            transform.position = Vector2.Lerp(new Vector2(0, 1.5f), new Vector2(0, 6), (i + 1) / steps);
 
             yield return new WaitForSeconds(0.02f);
         }

@@ -14,7 +14,7 @@ public class AnimateBox : MonoBehaviour
     {
         yield return new WaitForSeconds(0.15f);
 
-        transform.position = new Vector2(0, 0);
+        transform.position = new Vector2(0, -0.45f);
 
         yield return new WaitForSeconds(0.35f);
 
@@ -23,7 +23,7 @@ public class AnimateBox : MonoBehaviour
 
         for (int i = 0; i < steps; i++)
         {
-            transform.position = Vector2.Lerp(new Vector2(0, 0), new Vector2(12, 0), (i + 1) / steps);
+            transform.position = Vector2.Lerp(new Vector2(0, -0.45f), new Vector2(12, -0.45f), (i + 1) / steps);
 
             yield return new WaitForSeconds(0.02f);
         }
