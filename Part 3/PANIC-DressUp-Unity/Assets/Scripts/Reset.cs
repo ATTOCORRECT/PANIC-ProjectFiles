@@ -34,12 +34,14 @@ public class Reset : MonoBehaviour
     {
         gameObject.BroadcastMessage("AnimateReset");
         gameObject.BroadcastMessage("AnimateResetSucess");
+        gameObject.BroadcastMessage("IncreaseSuccesses");
         timer.SendMessage("AdjustTime");
     }
 
     public void ResetFaliure()
     {
         gameObject.BroadcastMessage("AnimateReset");
+        gameObject.BroadcastMessage("IncreaseFaliures");
         timer.SendMessage("ResetTime");
         strikes++;
     }
