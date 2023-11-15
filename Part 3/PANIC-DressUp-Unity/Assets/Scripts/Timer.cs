@@ -35,7 +35,7 @@ public class Timer : MonoBehaviour
 
     void AdjustTime()
     {
-        maxTime = (maxTime/resetScript.resets) + minTime;
+        maxTime = (maxTime/(resetScript.resets + 1)) + minTime;
         time = maxTime;
         
     }
