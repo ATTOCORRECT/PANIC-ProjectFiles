@@ -25,6 +25,6 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, direction * MAX_SPEED, ACCELERATION)
 	else:
 		velocity.x = move_toward(velocity.x, 0, FRICTION)
-
-
 	move_and_slide()
+	
+
