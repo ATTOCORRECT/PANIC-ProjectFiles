@@ -17,19 +17,5 @@ shape = SubResource("CapsuleShape2D_cqt3j")
 scale = Vector2(0.242188, 0.609375)
 texture = ExtResource("1_0n4x3")
 
-[node name="PlayerCamera" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true
-
-[node name="WallJumpInputSupresstionTimer" type="Timer" parent="."]
-process_callback = 0
-wait_time = 0.1
-one_shot = true
-
-[node name="CoyoteTimer" type="Timer" parent="."]
-process_callback = 0
-wait_time = 0.15
-one_shot = true
-
-[node name="WallCoyoteTimer" type="Timer" parent="."]
-wait_time = 0.1
-one_shot = true
