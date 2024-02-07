@@ -47,4 +47,5 @@ Sprint={
 
 [physics]
 
+common/physics_jitter_fix=0.0
 2d/default_gravity=2000.0

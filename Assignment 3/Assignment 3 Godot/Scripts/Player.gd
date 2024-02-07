@@ -8,6 +8,7 @@ const JUMP_VELOCITY = -750.0
 const SWING_SPEED = 700.0
 
 var canSwing = false
+var timeSlow = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -51,7 +52,7 @@ func jump(delta): # Handle Jump
 
 func move(delta): # Get the input direction and handle the movement/deceleration
 	var direction = Input.get_axis("move_left", "move_right")
-	if direction and abs(velocity.x) < MAX_SPEED:
+	if direction and velocity.x * direction < MAX_SPEED:
 		velocity.x = move_toward(velocity.x, direction * MAX_SPEED, ACCELERATION * delta)
 	elif is_on_floor():
 		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
