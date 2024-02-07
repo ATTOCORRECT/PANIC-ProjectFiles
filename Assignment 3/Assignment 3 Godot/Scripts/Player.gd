@@ -15,6 +15,7 @@ var direction = 0
 var canSwing = false
 var timeSlow = false
 var canMove = true
+var inputJumpBuffered = false
 var isOnCoyoteFloor = true
 var isOnCoyoteWallOnly = false
 
@@ -32,6 +33,7 @@ func _physics_process(delta): # physics update
 	
 	sword()
 	coyoteFloor()
+	jumpBuffer()
 	jump(delta)
 	move(delta)
 	coyoteWall()
@@ -59,9 +61,18 @@ func sword(): # Handle Sword Dash
 		canSwing = true
 
 func jump(delta): # Handle Jump
-	if Input.is_action_just_pressed("jump") and isOnCoyoteFloor:
+	if inputJumpBuffered and isOnCoyoteFloor:
+		inputJumpBuffered = false
 		isOnCoyoteFloor = false
 		velocity += Vector2.UP * JUMP_VELOCITY
+
+func jumpBuffer():
+	if Input.is_action_just_pressed("jump"):
+		inputJumpBuffered = true
+		$JumpBufferTimer.start()
+	
+	if $JumpBufferTimer.is_stopped():
+		inputJumpBuffered = false
 
 func coyoteFloor(): # coyote time logic
 	if is_on_floor():
@@ -72,7 +83,7 @@ func coyoteFloor(): # coyote time logic
 		isOnCoyoteFloor = false
 
 func wallJump(): # Handle Wall Jump
-	if Input.is_action_just_pressed("jump") and isOnCoyoteWallOnly:
+	if inputJumpBuffered and isOnCoyoteWallOnly:
 		isOnCoyoteWallOnly = false
 		velocity += (Vector2.UP + Vector2.RIGHT * get_wall_normal().x).normalized() * JUMP_VELOCITY
 		
