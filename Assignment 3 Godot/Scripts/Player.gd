@@ -11,6 +11,10 @@ const SWING_SPEED = 700.0
 
 var direction = 0
 
+var cameraOriginalPosition = Vector2.ZERO
+var mouseOriginalPosition = Vector2.ZERO
+var cameraPositionDelta = Vector2.ZERO
+var swingDirection = Vector2.ZERO
 # bools
 var canSwing = false
 var timeSlow = false
@@ -24,7 +28,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _draw():
 	if Input.is_action_pressed("SwingSword") and canSwing:
-		draw_line(Vector2.ZERO,get_local_mouse_position().normalized() * 100,Color.WHITE,1)
+		draw_line(Vector2.ZERO,swingDirection * 100,Color.WHITE,1)
 
 func _physics_process(delta): # physics update
 	# Add the gravity.
@@ -43,8 +47,13 @@ func _physics_process(delta): # physics update
 	queue_redraw()
 
 func sword(): # Handle Sword Dash
+	if Input.is_action_just_pressed("SwingSword"):
+		cameraOriginalPosition = $PlayerCamera.get_screen_center_position()
+		mouseOriginalPosition = get_global_mouse_position()
+	cameraPositionDelta = $PlayerCamera.get_screen_center_position() - cameraOriginalPosition
+	swingDirection = (get_global_mouse_position() - (mouseOriginalPosition + cameraPositionDelta)).normalized()
+	
 	if Input.is_action_just_released("SwingSword") and canSwing:
-		var swingDirection = get_local_mouse_position().normalized()
 		if is_on_floor(): # flatten swing if on ground
 			swingDirection.y = 0
 			swingDirection.x = sign(swingDirection.x)
