@@ -22,9 +22,14 @@ var canMove = true
 var inputJumpBuffered = false
 var isOnCoyoteFloor = true
 var isOnCoyoteWallOnly = false
+var isSprinting = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+#getting the animation player
+@onready var animation = $AnimationPlayer
+@onready var sprite = $Sprite2D
 
 func _draw():
 	if Input.is_action_pressed("SwingSword") and canSwing:
@@ -34,6 +39,16 @@ func _physics_process(delta): # physics update
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
+		
+		if canSwing:
+			animation.play("fall")
+	elif is_on_floor():
+		if direction and Input.is_action_pressed("Sprint"):
+			animation.play("sprint")
+		elif direction:
+			animation.play("walk")
+		else:
+			animation.play("idle")
 	
 	sword()
 	coyoteFloor()
@@ -45,6 +60,12 @@ func _physics_process(delta): # physics update
 	#wallSlide(delta)
 	move_and_slide()
 	queue_redraw()
+	
+	# flip sprite
+	if Input.is_action_pressed("move_left"):
+		sprite.flip_h = true
+	elif Input.is_action_pressed("move_right"):
+		sprite.flip_h = false
 
 func sword(): # Handle Sword Dash
 	if Input.is_action_just_pressed("SwingSword"):
@@ -60,6 +81,9 @@ func sword(): # Handle Sword Dash
 		velocity = swingDirection * SWING_SPEED
 		move_and_collide(swingDirection)
 		canSwing = false
+		
+		animation.play("dash")
+		animation.queue("fall")
 	
 	if Input.is_action_pressed("SwingSword") and canSwing and not is_on_floor():
 		Engine.time_scale = 0.1
@@ -116,6 +140,9 @@ func coyoteWall(): # wall coyote time logic
 func wallSlide(delta): # not functional
 	if is_on_wall_only() and get_wall_normal().x * direction < 0:
 		velocity.y = velocity.y * 10 * delta * abs(get_wall_normal().x)
+		
+		#placeholder animation for when this is working
+		animation.play("wall_slide")
 
 func move(delta): # Get the input direction and handle the movement/deceleration
 	direction = Input.get_axis("move_left", "move_right")
