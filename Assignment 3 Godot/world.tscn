@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b60ju5qti3kcf"]
+[gd_scene load_steps=4 format=3 uid="uid://b60ju5qti3kcf"]
 
 [ext_resource type="PackedScene" uid="uid://da31rdk83ydat" path="res://Player.tscn" id="1_171vc"]
 [ext_resource type="PackedScene" uid="uid://dhjhyq6ycr547" path="res://Platform.tscn" id="2_g74vr"]
+[ext_resource type="Script" path="res://SessionTracking.gd" id="3_yvqfy"]
 
 [node name="World" type="Node2D"]
 
@@ -14,6 +15,10 @@ scale = Vector2(10, 1)
 
 [node name="StaticBody2D12" parent="." instance=ExtResource("2_g74vr")]
 position = Vector2(581, -54)
+scale = Vector2(14.56, 1)
+
+[node name="StaticBody2D17" parent="." instance=ExtResource("2_g74vr")]
+position = Vector2(589, -265)
 scale = Vector2(14.56, 1)
 
 [node name="StaticBody2D" parent="." instance=ExtResource("2_g74vr")]
@@ -54,9 +59,13 @@ scale = Vector2(0.151032, 2.0717)
 position = Vector2(-55, 276)
 scale = Vector2(0.453097, 7.59625)
 
-[node name="StaticBody2D11" parent="." instance=ExtResource("2_g74vr")]
-position = Vector2(1252, 258)
-scale = Vector2(0.453097, 7.59625)
+[node name="StaticBody2D15" parent="." instance=ExtResource("2_g74vr")]
+position = Vector2(1551, -23033)
+scale = Vector2(-0.315008, 459.975)
+
+[node name="StaticBody2D16" parent="." instance=ExtResource("2_g74vr")]
+position = Vector2(1649, -22530)
+scale = Vector2(-0.315008, 459.975)
 
 [node name="StaticBody2D6" parent="." instance=ExtResource("2_g74vr")]
 position = Vector2(1033, 9)
@@ -65,3 +74,8 @@ scale = Vector2(0.151032, 0.671705)
 [node name="StaticBody2D8" parent="." instance=ExtResource("2_g74vr")]
 position = Vector2(858, 9)
 scale = Vector2(0.151032, 0.671705)
+
+[node name="SessionTracking" type="RichTextLabel" parent="."]
+offset_right = 196.0
+offset_bottom = 124.0
+script = ExtResource("3_yvqfy")

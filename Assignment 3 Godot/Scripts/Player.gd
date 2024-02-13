@@ -24,6 +24,9 @@ var isOnCoyoteFloor = true
 var isOnCoyoteWallOnly = false
 var isSprinting = false
 
+var IsSwinging = false
+
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -31,12 +34,21 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var animation = $AnimationPlayer
 @onready var sprite = $Sprite2D
 
+
 func _draw():
 	if Input.is_action_pressed("SwingSword") and canSwing:
 		draw_line(Vector2.ZERO,swingDirection * 100,Color.WHITE,1)
 
 func _physics_process(delta): # physics update
-	# Add the gravity.
+	# Add the gravity.	
+	
+	Telemetry.set_section("Ingame")
+	
+	if (Input.is_action_just_released("SwingSword") && canSwing):
+		IsSwinging = true
+	else:
+		IsSwinging = false
+	
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		
@@ -81,6 +93,7 @@ func sword(): # Handle Sword Dash
 		velocity = swingDirection * SWING_SPEED
 		move_and_collide(swingDirection)
 		canSwing = false
+		Telemetry.log_event("MainLevel", "Sword Swung", {x = position.x, y = position.y})
 		
 		animation.play("dash")
 		animation.queue("fall")
@@ -176,3 +189,7 @@ func groundFriction(delta): # ground slow down
 func airResistance(delta): # air slow down
 	velocity.x = move_toward(velocity.x, 0, AIR_RESISTANCE * delta)
 
+
+
+func _on_pos_log_timer_timeout():
+	Telemetry.log_event("", "Position", {x = position.x, y = position.y})
