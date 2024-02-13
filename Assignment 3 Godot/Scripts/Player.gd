@@ -74,16 +74,27 @@ func sword(): # Handle Sword Dash
 	cameraPositionDelta = $PlayerCamera.get_screen_center_position() - cameraOriginalPosition
 	swingDirection = (get_global_mouse_position() - (mouseOriginalPosition + cameraPositionDelta)).normalized()
 	
-	if Input.is_action_just_released("SwingSword") and canSwing:
+	if Input.is_action_just_released("SwingSword") and canSwing: # successful sword swing
 		if is_on_floor(): # flatten swing if on ground
 			swingDirection.y = 0
 			swingDirection.x = sign(swingDirection.x)
+		
+		Telemetry.log_event("", "Sword Swing Release", {position = position, 
+		timeSlow = Engine.time_scale < 1, swingDirection = swingDirection, 
+		onFloor = is_on_floor() })
+		
 		velocity = swingDirection * SWING_SPEED
 		move_and_collide(swingDirection)
 		canSwing = false
 		
 		animation.play("dash")
 		animation.queue("fall")
+	
+	if Input.is_action_just_pressed("SwingSword") and canSwing:
+		Telemetry.log_event("", "Sword Swing Start", {position = position, 
+		
+		timeSlow = Engine.time_scale < 1, 
+		onFloor = is_on_floor() })
 	
 	if Input.is_action_pressed("SwingSword") and canSwing and not is_on_floor():
 		Engine.time_scale = 0.1
@@ -94,7 +105,9 @@ func sword(): # Handle Sword Dash
 		canSwing = true
 
 func jump(delta): # Handle Jump
-	if inputJumpBuffered and isOnCoyoteFloor:
+	if inputJumpBuffered and isOnCoyoteFloor: # successful jump
+		Telemetry.log_event("", "Jump", {position = position})
+		
 		inputJumpBuffered = false
 		isOnCoyoteFloor = false
 		velocity += Vector2.UP * JUMP_VELOCITY
@@ -116,7 +129,9 @@ func coyoteFloor(): # coyote time logic
 		isOnCoyoteFloor = false
 
 func wallJump(): # Handle Wall Jump
-	if inputJumpBuffered and isOnCoyoteWallOnly:
+	if inputJumpBuffered and isOnCoyoteWallOnly: # successful wall jump
+		Telemetry.log_event("", "Wall Jump", {position = position})
+		
 		isOnCoyoteWallOnly = false
 		velocity += (Vector2.UP + Vector2.RIGHT * get_wall_normal().x).normalized() * JUMP_VELOCITY
 		
