@@ -60,11 +60,14 @@ func _physics_process(delta): # physics update
 	#wallSlide(delta)
 	move_and_slide()
 	queue_redraw()
+
 	
 	# flip sprite
 	if Input.is_action_pressed("move_left"):
+		Telemetry.log_event("", "Player Going Left", null)
 		sprite.flip_h = true
 	elif Input.is_action_pressed("move_right"):
+		Telemetry.log_event("", "Player Going Right", null)
 		sprite.flip_h = false
 
 func sword(): # Handle Sword Dash
@@ -101,6 +104,7 @@ func jump(delta): # Handle Jump
 
 func jumpBuffer():
 	if Input.is_action_just_pressed("jump"):
+		Telemetry.log_event("", "Player Jumped", {x = position.x, y = position.y })
 		inputJumpBuffered = true
 		$JumpBufferTimer.start()
 	

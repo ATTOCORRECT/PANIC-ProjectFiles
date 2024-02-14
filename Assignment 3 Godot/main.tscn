@@ -19,5 +19,9 @@ offset_right = 709.0
 offset_bottom = 452.0
 text = "Quit"
 
+[node name="SessionInfo" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [connection signal="button_up" from="Play" to="." method="_on_play_button_up"]
 [connection signal="button_up" from="Quit" to="." method="_on_quit_button_up"]
