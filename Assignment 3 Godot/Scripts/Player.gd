@@ -24,6 +24,9 @@ var isOnCoyoteFloor = true
 var isOnCoyoteWallOnly = false
 var isSprinting = false
 
+#music variables 
+var impactSoundHasPlayed
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -175,4 +178,11 @@ func groundFriction(delta): # ground slow down
 
 func airResistance(delta): # air slow down
 	velocity.x = move_toward(velocity.x, 0, AIR_RESISTANCE * delta)
+	
+func playerImpactSound(delta): ##playing the player impact sound
+	if is_on_floor:
+		$PlayerImpactSoundPlayer.play()
+		impactSoundHasPlayed = true
+	pass
+
 
