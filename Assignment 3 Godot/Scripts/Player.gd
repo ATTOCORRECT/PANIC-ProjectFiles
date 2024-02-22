@@ -11,10 +11,12 @@ const SWING_SPEED = 700.0
 
 var direction = 0
 
+# vectors
 var cameraOriginalPosition = Vector2.ZERO
 var mouseOriginalPosition = Vector2.ZERO
 var cameraPositionDelta = Vector2.ZERO
 var swingDirection = Vector2.ZERO
+
 # bools
 var canSwing = false
 var timeSlow = false
@@ -34,18 +36,36 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var animation = $AnimationPlayer
 @onready var sprite = $Sprite2D
 
-func _draw():
+func _draw(): # debug line stuff
 	if Input.is_action_pressed("SwingSword") and canSwing:
 		draw_line(Vector2.ZERO,swingDirection * 100,Color.WHITE,1)
 
 func _physics_process(delta): # physics update
 	# Add the gravity.
-	if not is_on_floor():
-		velocity.y += gravity * delta
-		
+	velocity.y += gravity * delta
+	
+
+	
+	#buffers
+	coyoteFloor()
+	coyoteWall()
+	jumpBuffer()
+	
+	#movement
+	sword()
+	move(delta)
+	jump(delta)
+	wallJump()
+	#wallSlide(delta)
+	
+	move_and_slide()
+	
+	if not isOnCoyoteFloor:
 		if canSwing:
 			animation.play("fall")
-	elif is_on_floor():
+		
+	elif isOnCoyoteFloor:
+		
 		if direction and Input.is_action_pressed("Sprint"):
 			animation.play("sprint")
 		elif direction:
@@ -53,22 +73,13 @@ func _physics_process(delta): # physics update
 		else:
 			animation.play("idle")
 	
-	sword()
-	coyoteFloor()
-	jumpBuffer()
-	jump(delta)
-	move(delta)
-	coyoteWall()
-	wallJump()
-	#wallSlide(delta)
-	move_and_slide()
-	queue_redraw()
-	
 	# flip sprite
 	if Input.is_action_pressed("move_left"):
 		sprite.flip_h = true
 	elif Input.is_action_pressed("move_right"):
 		sprite.flip_h = false
+	
+	queue_redraw() # debug lines
 
 func sword(): # Handle Sword Dash
 	if Input.is_action_just_pressed("SwingSword"):
@@ -100,7 +111,7 @@ func jump(delta): # Handle Jump
 	if inputJumpBuffered and isOnCoyoteFloor:
 		inputJumpBuffered = false
 		isOnCoyoteFloor = false
-		velocity += Vector2.UP * JUMP_VELOCITY
+		velocity.y = -JUMP_VELOCITY
 
 func jumpBuffer():
 	if Input.is_action_just_pressed("jump"):
@@ -153,9 +164,9 @@ func move(delta): # Get the input direction and handle the movement/deceleration
 	if direction and canMove:
 		if is_on_floor():
 			if Input.is_action_pressed("Sprint"):
-				runMove(delta)
+				walkMove(delta, MAX_SPEED) # running
 			else:
-				walkMove(delta)
+				walkMove(delta, MAX_WALK_SPEED) # walking
 		else:
 			airMove(delta)
 	elif is_on_floor():
@@ -163,11 +174,9 @@ func move(delta): # Get the input direction and handle the movement/deceleration
 	else:
 		airResistance(delta)
 
-func walkMove(delta): # walking
-	velocity.x = move_toward(velocity.x, direction * MAX_WALK_SPEED, ACCELERATION * delta)
-
-func runMove(delta): # running
-	velocity.x = move_toward(velocity.x, direction * MAX_SPEED, ACCELERATION * delta)
+func walkMove(delta, maxSpeed): # walking & running
+	velocity.x = move_toward(velocity.x, direction * maxSpeed, ACCELERATION * delta)
+	velocity.y = velocity.x / get_floor_normal().y * get_floor_normal().x * -1 +100 
 
 func airMove(delta): # air control
 	if velocity.x * direction < MAX_SPEED:
@@ -183,6 +192,4 @@ func playerImpactSound(delta): ##playing the player impact sound
 	if is_on_floor:
 		$PlayerImpactSoundPlayer.play()
 		impactSoundHasPlayed = true
-	pass
-
 

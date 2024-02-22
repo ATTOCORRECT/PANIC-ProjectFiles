@@ -797,7 +797,7 @@ position = Vector2(-55, 276)
 scale = Vector2(0.453097, 7.59625)
 
 [node name="StaticBody2D11" parent="." instance=ExtResource("2_g74vr")]
-position = Vector2(1252, 258)
+position = Vector2(1275, 534)
 scale = Vector2(0.453097, 7.59625)
 
 [node name="StaticBody2D6" parent="." instance=ExtResource("2_g74vr")]
@@ -808,7 +808,12 @@ scale = Vector2(0.151032, 0.671705)
 position = Vector2(858, 9)
 scale = Vector2(0.151032, 0.671705)
 
+[node name="StaticBody2D15" parent="." instance=ExtResource("2_g74vr")]
+position = Vector2(1719, -25)
+rotation = -0.785398
+scale = Vector2(6.84, 0.479999)
+
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_y1fmx")
 format = 2
-layer_0/tile_data = PackedInt32Array(196609, 1, 0, 196610, 1, 0, 131073, 65537, 0, 131074, 196609, 0, 131078, 1, 0, 131079, 1, 0)
+layer_0/tile_data = PackedInt32Array(196609, 1, 0, 196610, 1, 0, 131073, 65537, 0, 131074, 196609, 0)
