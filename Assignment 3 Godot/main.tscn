@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dtgx3y0ckm1o3"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_yh0t8"]
-[ext_resource type="AudioStream" uid="uid://ctnapcofs5b6h" path="res://musicStuff/Design Practice Menu Theme.mp3" id="2_hhwk7"]
-[ext_resource type="AudioStream" uid="uid://c01mhbuumea10" path="res://musicStuff/PlayerImpactSound.mp3" id="3_qp56h"]
+[ext_resource type="AudioStream" path="res://musicStuff/Design Practice Menu Theme.mp3" id="2_hhwk7"]
+[ext_resource type="AudioStream" path="res://musicStuff/PlayerImpactSound.mp3" id="3_qp56h"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_yh0t8")
