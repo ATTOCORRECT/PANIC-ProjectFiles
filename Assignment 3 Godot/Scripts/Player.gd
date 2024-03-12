@@ -26,18 +26,18 @@ var isOnCoyoteFloor = true
 var isOnCoyoteWallOnly = false
 var isSprinting = false
 
-#music variables 
+# music variables 
 var impactSoundHasPlayed
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-#getting the animation player
+# getting the animation player
 @onready var animation = $AnimationPlayer
 @onready var sprite = $Sprite2D
 
 func _draw(): # debug line stuff
-	if Input.is_action_pressed("SwingSword") and canSwing:
+	if Input.is_action_pressed("swing_sword") and canSwing:
 		draw_line(Vector2.ZERO,swingDirection * 100,Color.WHITE,1)
 
 func _physics_process(delta): # physics update
@@ -46,27 +46,28 @@ func _physics_process(delta): # physics update
 	
 
 	
-	#buffers
+	# buffers
 	coyoteFloor()
 	coyoteWall()
 	jumpBuffer()
 	
-	#movement
+	# movement
 	sword()
 	move(delta)
 	jump(delta)
 	wallJump()
-	#wallSlide(delta)
+	# wallSlide(delta) # not functional
 	
 	move_and_slide()
 	
+	# animations
 	if not isOnCoyoteFloor:
 		if canSwing:
 			animation.play("fall")
 		
 	elif isOnCoyoteFloor:
 		
-		if direction and Input.is_action_pressed("Sprint"):
+		if direction and Input.is_action_pressed("sprint"):
 			animation.play("sprint")
 		elif direction:
 			animation.play("walk")
@@ -82,13 +83,13 @@ func _physics_process(delta): # physics update
 	queue_redraw() # debug lines
 
 func sword(): # Handle Sword Dash
-	if Input.is_action_just_pressed("SwingSword"):
+	if Input.is_action_just_pressed("swing_sword"):
 		cameraOriginalPosition = $PlayerCamera.get_screen_center_position()
 		mouseOriginalPosition = get_global_mouse_position()
 	cameraPositionDelta = $PlayerCamera.get_screen_center_position() - cameraOriginalPosition
 	swingDirection = (get_global_mouse_position() - (mouseOriginalPosition + cameraPositionDelta)).normalized()
 	
-	if Input.is_action_just_released("SwingSword") and canSwing: # successful sword swing
+	if Input.is_action_just_released("swing_sword") and canSwing: # successful sword swing
 		if is_on_floor(): # flatten swing if on ground
 			swingDirection.y = 0
 			swingDirection.x = sign(swingDirection.x)
@@ -104,13 +105,13 @@ func sword(): # Handle Sword Dash
 		animation.play("dash")
 		animation.queue("fall")
 	
-	if Input.is_action_just_pressed("SwingSword") and canSwing:
-		Telemetry.log_event("", "Sword Swing Start", {position = position, 
+	if Input.is_action_just_pressed("swing_sword") and canSwing:
 		
+		Telemetry.log_event("", "Sword Swing Start", {position = position, 
 		timeSlow = Engine.time_scale < 1, 
 		onFloor = is_on_floor() })
 	
-	if Input.is_action_pressed("SwingSword") and canSwing and not is_on_floor():
+	if Input.is_action_pressed("swing_sword") and canSwing and not is_on_floor():
 		Engine.time_scale = 0.1
 	else:
 		Engine.time_scale = 1
@@ -144,6 +145,7 @@ func coyoteFloor(): # coyote time logic
 
 func wallJump(): # Handle Wall Jump
 	if inputJumpBuffered and isOnCoyoteWallOnly: # successful wall jump
+		
 		Telemetry.log_event("", "Wall Jump", {position = position})
 		
 		isOnCoyoteWallOnly = false
@@ -170,7 +172,7 @@ func wallSlide(delta): # not functional
 	if is_on_wall_only() and get_wall_normal().x * direction < 0:
 		velocity.y = velocity.y * 10 * delta * abs(get_wall_normal().x)
 		
-		#placeholder animation for when this is working
+		# placeholder animation for when this is working
 		animation.play("wall_slide")
 
 func move(delta): # Get the input direction and handle the movement/deceleration
@@ -178,7 +180,7 @@ func move(delta): # Get the input direction and handle the movement/deceleration
 	
 	if direction and canMove:
 		if is_on_floor():
-			if Input.is_action_pressed("Sprint"):
+			if Input.is_action_pressed("sprint"):
 				walkMove(delta, MAX_SPEED) # running
 			else:
 				walkMove(delta, MAX_WALK_SPEED) # walking
@@ -188,6 +190,39 @@ func move(delta): # Get the input direction and handle the movement/deceleration
 		groundFriction(delta)
 	else:
 		airResistance(delta)
+	
+	# movement telemetry
+	if Input.is_action_just_pressed("move_left"):
+		Telemetry.log_event("", "Move Left", 
+		{position = position,
+		canMove = canMove, 
+		direction = direction,
+		onFloor = is_on_floor(),
+		isSprinting = Input.is_action_pressed("sprint") && is_on_floor()})
+	
+	if Input.is_action_just_pressed("move_right"):
+		Telemetry.log_event("", "Move Right", 
+		{position = position,
+		canMove = canMove, 
+		direction = direction,
+		onFloor = is_on_floor(),
+		isSprinting = Input.is_action_pressed("sprint") && is_on_floor()})
+	
+	if Input.is_action_just_released("move_left"):
+		Telemetry.log_event("", "Stop Moving Left", 
+		{position = position,
+		canMove = canMove, 
+		direction = direction,
+		onFloor = is_on_floor(),
+		isSprinting = Input.is_action_pressed("sprint") && is_on_floor()})
+	
+	if Input.is_action_just_released("move_right"):
+		Telemetry.log_event("", "Stop Moving Right", 
+		{position = position,
+		canMove = canMove, 
+		direction = direction,
+		onFloor = is_on_floor(),
+		isSprinting = Input.is_action_pressed("sprint") && is_on_floor()})
 
 func walkMove(delta, maxSpeed): # walking & running
 	velocity.x = move_toward(velocity.x, direction * maxSpeed, ACCELERATION * delta)

@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://b60ju5qti3kcf"]
+[gd_scene load_steps=8 format=3 uid="uid://b60ju5qti3kcf"]
 
 [ext_resource type="PackedScene" uid="uid://da31rdk83ydat" path="res://Player.tscn" id="1_171vc"]
 [ext_resource type="PackedScene" uid="uid://dhjhyq6ycr547" path="res://Platform.tscn" id="2_g74vr"]
 [ext_resource type="Texture2D" path="res://tilesheet_complete.png" id="3_0mqm2"]
+[ext_resource type="PackedScene" uid="uid://cpg2plfinqonv" path="res://telemetry_keylogger.tscn" id="4_0xcds"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lfa58"]
 texture = ExtResource("3_0mqm2")
@@ -747,74 +748,82 @@ sources/1 = SubResource("TileSetAtlasSource_ow2ax")
 
 [node name="World" type="Node2D"]
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("1_171vc")]
-position = Vector2(250, 516)
+[node name="Level" type="Node2D" parent="."]
 
-[node name="StaticBody2D2" parent="." instance=ExtResource("2_g74vr")]
+[node name="StaticBody2D2" parent="Level" instance=ExtResource("2_g74vr")]
 position = Vector2(423, 609)
 scale = Vector2(10, 1)
 
-[node name="StaticBody2D12" parent="." instance=ExtResource("2_g74vr")]
+[node name="StaticBody2D12" parent="Level" instance=ExtResource("2_g74vr")]
 position = Vector2(581, -54)
 scale = Vector2(14.56, 1)
 
-[node name="StaticBody2D" parent="." instance=ExtResource("2_g74vr")]
+[node name="StaticBody2D" parent="Level" instance=ExtResource("2_g74vr")]
 position = Vector2(1273, 344)
 rotation = -0.567154
 scale = Vector2(10, 1)
 
-[node name="StaticBody2D3" parent="." instance=ExtResource("2_g74vr")]
+[node name="StaticBody2D3" parent="Level" instance=ExtResource("2_g74vr")]
 position = Vector2(940, -12)
 rotation = -3.14159
 scale = Vector2(1.78461, 0.25659)
 
-[node name="StaticBody2D7" parent="." instance=ExtResource("2_g74vr")]
+[node name="StaticBody2D7" parent="Level" instance=ExtResource("2_g74vr")]
 position = Vector2(603, 505)
-scale = Vector2(-0.641871, -2.13235)
+rotation = -3.14159
+scale = Vector2(0.641871, 2.13235)
 
-[node name="StaticBody2D13" parent="." instance=ExtResource("2_g74vr")]
+[node name="StaticBody2D13" parent="Level" instance=ExtResource("2_g74vr")]
 position = Vector2(-0.999878, 392)
-scale = Vector2(-0.641871, -2.13235)
+rotation = -3.14159
+scale = Vector2(0.641871, 2.13235)
 
-[node name="StaticBody2D14" parent="." instance=ExtResource("2_g74vr")]
+[node name="StaticBody2D14" parent="Level" instance=ExtResource("2_g74vr")]
 position = Vector2(283, 321)
-rotation = 1.0472
-scale = Vector2(-0.319384, -2.75053)
+rotation = -2.09439
+scale = Vector2(0.319384, 2.75053)
 
-[node name="StaticBody2D9" parent="." instance=ExtResource("2_g74vr")]
+[node name="StaticBody2D9" parent="Level" instance=ExtResource("2_g74vr")]
 position = Vector2(937, 144)
-scale = Vector2(-0.892303, -0.17659)
+rotation = -3.14159
+scale = Vector2(0.892303, 0.17659)
 
-[node name="StaticBody2D4" parent="." instance=ExtResource("2_g74vr")]
+[node name="StaticBody2D4" parent="Level" instance=ExtResource("2_g74vr")]
 position = Vector2(608, 254)
-scale = Vector2(-4.33407, -0.25659)
+rotation = -3.14159
+scale = Vector2(4.33407, 0.25659)
 
-[node name="StaticBody2D5" parent="." instance=ExtResource("2_g74vr")]
+[node name="StaticBody2D5" parent="Level" instance=ExtResource("2_g74vr")]
 position = Vector2(938, 239)
 scale = Vector2(0.151032, 2.0717)
 
-[node name="StaticBody2D10" parent="." instance=ExtResource("2_g74vr")]
+[node name="StaticBody2D10" parent="Level" instance=ExtResource("2_g74vr")]
 position = Vector2(-55, 276)
 scale = Vector2(0.453097, 7.59625)
 
-[node name="StaticBody2D11" parent="." instance=ExtResource("2_g74vr")]
+[node name="StaticBody2D11" parent="Level" instance=ExtResource("2_g74vr")]
 position = Vector2(1275, 534)
 scale = Vector2(0.453097, 7.59625)
 
-[node name="StaticBody2D6" parent="." instance=ExtResource("2_g74vr")]
+[node name="StaticBody2D6" parent="Level" instance=ExtResource("2_g74vr")]
 position = Vector2(1033, 9)
 scale = Vector2(0.151032, 0.671705)
 
-[node name="StaticBody2D8" parent="." instance=ExtResource("2_g74vr")]
+[node name="StaticBody2D8" parent="Level" instance=ExtResource("2_g74vr")]
 position = Vector2(858, 9)
 scale = Vector2(0.151032, 0.671705)
 
-[node name="StaticBody2D15" parent="." instance=ExtResource("2_g74vr")]
+[node name="StaticBody2D15" parent="Level" instance=ExtResource("2_g74vr")]
 position = Vector2(1719, -25)
 rotation = -0.785398
 scale = Vector2(6.84, 0.479999)
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="TileMap" type="TileMap" parent="Level"]
 tile_set = SubResource("TileSet_y1fmx")
 format = 2
 layer_0/tile_data = PackedInt32Array(196609, 1, 0, 196610, 1, 0, 131073, 65537, 0, 131074, 196609, 0)
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_171vc")]
+position = Vector2(250, 516)
+
+[node name="TelemetryKeylogger" parent="." instance=ExtResource("4_0xcds")]
