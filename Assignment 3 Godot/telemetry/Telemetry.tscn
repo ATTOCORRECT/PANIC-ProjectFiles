@@ -8,7 +8,6 @@ user_name = "diazgarm"
 secret = "991677055"
 version = "TelemetryTest-0"
 default_section = "Menu"
-log_to_server = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 use_threads = true
