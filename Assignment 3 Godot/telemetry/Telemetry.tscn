@@ -6,7 +6,7 @@
 script = ExtResource("1_mu8ae")
 user_name = "diazgarm"
 secret = "991677055"
-version = "TelemetryTest-0"
+version = "TelemetryTest-1"
 default_section = "Menu"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
