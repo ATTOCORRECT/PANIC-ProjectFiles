@@ -4,10 +4,12 @@
 
 [node name="Telemetry" type="Node"]
 script = ExtResource("1_mu8ae")
-user_name = "diazgarm"
-secret = "991677055"
-version = "TelemetryTest-1"
+user_name = "P.A.N.I.C."
+secret = "variation cause"
+version = "playtest-1"
 default_section = "Menu"
+log_to_server = true
+debug_print = false
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 use_threads = true
