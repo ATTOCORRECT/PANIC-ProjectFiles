@@ -1,0 +1,14 @@
+~ Test_Node_Title
+
+Ninja Cat: [[Hi|Hello|Hey]], I've been turned into a cat. I hate it here.
+Ninja Cat: What do you think?
+- Wow you're so cool
+	Ninja Cat: Thanks, can we go now?
+- I hate cats
+	Ninja Cat: Me too. I'm going to kill the wizard that made me this way...
+	Ninja Cat: But that's for the finished game.
+- Start again => Test_Node_Title
+- End the conversation => END
+Ninja Cat: You better not fail any of the jumps..
+
+=> END
