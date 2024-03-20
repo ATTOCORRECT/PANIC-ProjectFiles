@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://b60ju5qti3kcf"]
+[gd_scene load_steps=9 format=3 uid="uid://b60ju5qti3kcf"]
 
 [ext_resource type="PackedScene" uid="uid://da31rdk83ydat" path="res://Player.tscn" id="1_171vc"]
 [ext_resource type="Texture2D" uid="uid://j67r60fwk2jq" path="res://tilesheet_complete.png" id="3_0mqm2"]
 [ext_resource type="PackedScene" uid="uid://cpg2plfinqonv" path="res://telemetry_keylogger.tscn" id="4_0xcds"]
+[ext_resource type="PackedScene" uid="uid://dim0pdywwiakw" path="res://actionables.tscn" id="4_5e5ey"]
+[ext_resource type="Resource" uid="uid://cyif4bdh1k5k1" path="res://playtestingDialogue.dialogue" id="5_btwar"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_riign"]
 texture = ExtResource("3_0mqm2")
@@ -815,6 +817,9 @@ tile_size = Vector2i(64, 64)
 physics_layer_0/collision_layer = 1
 sources/4 = SubResource("TileSetAtlasSource_riign")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_el7q5"]
+size = Vector2(269, 99)
+
 [node name="World" type="Node2D"]
 
 [node name="Level" type="Node2D" parent="."]
@@ -829,3 +834,10 @@ layer_0/tile_data = PackedInt32Array(524301, 196612, 7, 458766, 196612, 7, 39323
 position = Vector2(610, -90)
 
 [node name="TelemetryKeylogger" parent="." instance=ExtResource("4_0xcds")]
+
+[node name="Actionables" parent="." instance=ExtResource("4_5e5ey")]
+dialogue_resource = ExtResource("5_btwar")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Actionables"]
+position = Vector2(221, -81.5)
+shape = SubResource("RectangleShape2D_el7q5")

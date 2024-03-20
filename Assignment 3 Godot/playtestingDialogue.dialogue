@@ -1,0 +1,12 @@
+~ start
+
+Ninja Cat: [[Hi|Hello|Oh hey there]], you activated a dialogue box.
+Ninja Cat: Sometimes dialogue boxes will give you options on how to respond.
+- Wow that's so cool!
+	Ninja Cat: Yeah... sure, just means more work for the developers.
+- Do they affect the game in any way?
+	Ninja Cat: Not really, just adds replayability.
+- End the conversation => END
+Ninja Cat: Alright, let's get moving.
+
+=> END

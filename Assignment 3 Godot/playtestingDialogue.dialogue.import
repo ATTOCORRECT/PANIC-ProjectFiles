@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_11"
+type="Resource"
+uid="uid://cyif4bdh1k5k1"
+path="res://.godot/imported/playtestingDialogue.dialogue-94a7e31828671cd62f3f1bdb57dd66dc.tres"
+
+[deps]
+
+source_file="res://playtestingDialogue.dialogue"
+dest_files=["res://.godot/imported/playtestingDialogue.dialogue-94a7e31828671cd62f3f1bdb57dd66dc.tres"]
+
+[params]
+
+defaults=true

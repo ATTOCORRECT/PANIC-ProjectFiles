@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://da31rdk83ydat"]
+[gd_scene load_steps=14 format=3 uid="uid://da31rdk83ydat"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_24la8"]
 [ext_resource type="Texture2D" uid="uid://qf1nkrtiud6f" path="res://sprite_sheet.png" id="2_js5e2"]
@@ -151,6 +151,8 @@ _data = {
 "wall_slide": SubResource("Animation_0fpgp")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wefgl"]
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_24la8")
 
@@ -194,3 +196,10 @@ one_shot = true
 libraries = {
 "": SubResource("AnimationLibrary_381kf")
 }
+
+[node name="ActionableFinder" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActionableFinder"]
+shape = SubResource("CapsuleShape2D_wefgl")

@@ -36,6 +36,9 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var animation = $AnimationPlayer
 @onready var sprite = $Sprite2D
 
+#getting the area2d that finds dialogue boxes
+@onready var actionable_finder: Area2D = $ActionableFinder
+
 func _draw(): # debug line stuff
 	if Input.is_action_pressed("swing_sword") and canSwing:
 		draw_line(Vector2.ZERO,swingDirection * 100,Color.WHITE,1)
@@ -242,4 +245,11 @@ func playerImpactSound(delta): ##playing the player impact sound
 	if is_on_floor:
 		$PlayerImpactSoundPlayer.play()
 		impactSoundHasPlayed = true
+		
+func _unhandled_input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed("ui_accept"):
+		var actionables = actionable_finder.get_overlapping_areas()
+		if actionables.size() > 0:
+			actionables[0].action()
+			return
 
