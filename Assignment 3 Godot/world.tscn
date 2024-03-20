@@ -841,3 +841,11 @@ dialogue_resource = ExtResource("5_btwar")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Actionables"]
 position = Vector2(221, -81.5)
 shape = SubResource("RectangleShape2D_el7q5")
+
+[node name="TextEdit" type="TextEdit" parent="."]
+offset_left = 86.0
+offset_top = -132.0
+offset_right = 357.0
+offset_bottom = -34.0
+text = "Hey! Press 'Enter' here for 
+dialogue!"
