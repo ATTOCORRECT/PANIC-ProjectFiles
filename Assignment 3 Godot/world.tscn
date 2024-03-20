@@ -1,10 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://b60ju5qti3kcf"]
+[gd_scene load_steps=6 format=3 uid="uid://b60ju5qti3kcf"]
 
 [ext_resource type="PackedScene" uid="uid://da31rdk83ydat" path="res://Player.tscn" id="1_171vc"]
 [ext_resource type="Texture2D" uid="uid://j67r60fwk2jq" path="res://tilesheet_complete.png" id="3_0mqm2"]
 [ext_resource type="PackedScene" uid="uid://cpg2plfinqonv" path="res://telemetry_keylogger.tscn" id="4_0xcds"]
-[ext_resource type="PackedScene" uid="uid://b5wllj63gj8xy" path="res://actionable.tscn" id="4_c1t3w"]
-[ext_resource type="Resource" uid="uid://blqtebq0y23gn" path="res://dialogueScripts/DialogueTestSuccess.dialogue" id="5_7qjif"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_riign"]
 texture = ExtResource("3_0mqm2")
@@ -817,16 +815,6 @@ tile_size = Vector2i(64, 64)
 physics_layer_0/collision_layer = 1
 sources/4 = SubResource("TileSetAtlasSource_riign")
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ub2e2"]
-radius = 41.0
-height = 116.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_q6lmo"]
-size = Vector2(385, 70)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_t7k6p"]
-radius = 14.3178
-
 [node name="World" type="Node2D"]
 
 [node name="Level" type="Node2D" parent="."]
@@ -840,35 +828,4 @@ layer_0/tile_data = PackedInt32Array(524301, 196612, 7, 458766, 196612, 7, 39323
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_171vc")]
 position = Vector2(610, -90)
 
-[node name="DetectDialogue" type="Area2D" parent="CharacterBody2D"]
-position = Vector2(-3, 0)
-collision_layer = 17
-collision_mask = 17
-
-[node name="CollisionBox" type="CollisionShape2D" parent="CharacterBody2D/DetectDialogue"]
-shape = SubResource("CapsuleShape2D_ub2e2")
-
 [node name="TelemetryKeylogger" parent="." instance=ExtResource("4_0xcds")]
-
-[node name="DialogueBoxStuff" type="StaticBody2D" parent="."]
-collision_layer = 17
-collision_mask = 17
-
-[node name="Actionable" parent="DialogueBoxStuff" instance=ExtResource("4_c1t3w")]
-position = Vector2(-1, 0)
-dialogue_resources = ExtResource("5_7qjif")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueBoxStuff/Actionable"]
-position = Vector2(234.5, -69)
-shape = SubResource("RectangleShape2D_q6lmo")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueBoxStuff"]
-position = Vector2(-1, 1)
-shape = SubResource("CircleShape2D_t7k6p")
-
-[node name="TextEdit" type="TextEdit" parent="DialogueBoxStuff"]
-offset_left = 53.0
-offset_top = -96.0
-offset_right = 296.0
-offset_bottom = -43.0
-text = "HEY! CLICK ENTER HERE!!!!!"

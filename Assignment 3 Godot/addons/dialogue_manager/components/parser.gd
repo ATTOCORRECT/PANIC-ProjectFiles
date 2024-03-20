@@ -142,7 +142,7 @@ func parse(text: String, path: String) -> Error:
 		if raw_line.begins_with("using "):
 			var using_match: RegExMatch = USING_REGEX.search(raw_line)
 			if "state" in using_match.names:
-				var using_state: String = using_match.strings[using_match.names.state].strip_edges()
+				var using_state: String = using_match.strings[using_match.names.state]
 				if not using_state in autoload_names:
 					add_error(id, 0, DialogueConstants.ERR_UNKNOWN_USING)
 				elif not using_state in using_states:
@@ -333,7 +333,6 @@ func parse(text: String, path: String) -> Error:
 		# Regular dialogue
 		else:
 			# Remove escape character
-			if raw_line.begins_with("\\using"): raw_line = raw_line.substr(1)
 			if raw_line.begins_with("\\if"): raw_line = raw_line.substr(1)
 			if raw_line.begins_with("\\elif"): raw_line = raw_line.substr(1)
 			if raw_line.begins_with("\\else"): raw_line = raw_line.substr(1)
@@ -465,11 +464,6 @@ func parse(text: String, path: String) -> Error:
 		# Done!
 		parsed_lines[str(id)] = line
 
-	# Assume the last line ends the dialogue
-	var last_line: Dictionary = parsed_lines.values()[parsed_lines.values().size() - 1]
-	if last_line.next_id == "":
-		last_line.next_id = DialogueConstants.ID_END
-
 	if errors.size() > 0:
 		return ERR_PARSE_ERROR
 
@@ -496,7 +490,6 @@ func get_errors() -> Array[Dictionary]:
 
 ## Prepare the parser by collecting all lines and titles
 func prepare(text: String, path: String, include_imported_titles_hashes: bool = true) -> void:
-	using_states = []
 	errors = []
 	imported_paths = []
 	_imported_line_map = {}
@@ -1451,14 +1444,6 @@ func build_token_tree(tokens: Array[Dictionary], line_type: String, expected_clo
 				if sub_tree[0].size() > 0 and sub_tree[0][0].type == DialogueConstants.TOKEN_ERROR:
 					return [build_token_tree_error(sub_tree[0][0].value, token.index), tokens]
 
-				var t = sub_tree[0]
-				for i in range(0, t.size() - 2):
-					# Convert Lua style dictionaries to string keys
-					if t[i].type == DialogueConstants.TOKEN_VARIABLE and t[i+1].type == DialogueConstants.TOKEN_ASSIGNMENT:
-						t[i].type = DialogueConstants.TOKEN_STRING
-						t[i+1].type = DialogueConstants.TOKEN_COLON
-						t[i+1].erase("value")
-
 				tree.append({
 					type = DialogueConstants.TOKEN_DICTIONARY,
 					value = tokens_to_dictionary(sub_tree[0])
@@ -1615,7 +1600,6 @@ func check_next_token(token: Dictionary, next_tokens: Array[Dictionary], line_ty
 		DialogueConstants.TOKEN_BRACE_OPEN:
 			expected_token_types = [
 				DialogueConstants.TOKEN_STRING,
-				DialogueConstants.TOKEN_VARIABLE,
 				DialogueConstants.TOKEN_NUMBER,
 				DialogueConstants.TOKEN_BRACE_CLOSE
 			]

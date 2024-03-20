@@ -35,7 +35,6 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 # getting the animation player
 @onready var animation = $AnimationPlayer
 @onready var sprite = $Sprite2D
-@onready var detectDialogue: Area2D = $DetectDialogue
 
 func _draw(): # debug line stuff
 	if Input.is_action_pressed("swing_sword") and canSwing:
@@ -243,12 +242,4 @@ func playerImpactSound(delta): ##playing the player impact sound
 	if is_on_floor:
 		$PlayerImpactSoundPlayer.play()
 		impactSoundHasPlayed = true
-		
-func _unhandled_input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		var dialogue = detectDialogue.get_overlapping_areas()
-		if dialogue.size() > 0:
-			dialogue[0].action()
-			return
-
 

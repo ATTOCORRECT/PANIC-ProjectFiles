@@ -52,17 +52,15 @@ var dialogue_line:
 ## Whether the label is currently typing itself out.
 var is_typing: bool = false:
 	set(value):
-		var is_finished: bool = is_typing != value and value == false
-		is_typing = value
-		if is_finished:
+		if is_typing != value and value == false:
 			finished_typing.emit()
+		is_typing = value
 	get:
 		return is_typing
 
 var _last_wait_index: int = -1
 var _last_mutation_index: int = -1
 var _waiting_seconds: float = 0
-var _is_awaiting_mutation: bool = false
 
 
 func _process(delta: float) -> void:
@@ -122,15 +120,12 @@ func skip_typing() -> void:
 
 # Type out the next character(s)
 func _type_next(delta: float, seconds_needed: float) -> void:
-	if _is_awaiting_mutation: return
-
 	if visible_characters == get_total_character_count():
 		return
 
 	if _last_mutation_index != visible_characters:
 		_last_mutation_index = visible_characters
 		_mutate_inline_mutations(visible_characters)
-		if _is_awaiting_mutation: return
 
 	var additional_waiting_seconds: float = _get_pause(visible_characters)
 
@@ -183,10 +178,8 @@ func _mutate_inline_mutations(index: int) -> void:
 		if inline_mutation[0] > index:
 			return
 		if inline_mutation[0] == index:
-			_is_awaiting_mutation = true
 			# The DialogueManager can't be referenced directly here so we need to get it by its path
-			await Engine.get_singleton("DialogueManager").mutate(inline_mutation[1], dialogue_line.extra_game_states, true)
-			_is_awaiting_mutation = false
+			Engine.get_singleton("DialogueManager").mutate(inline_mutation[1], dialogue_line.extra_game_states, true)
 
 
 # Determine if the current autopause character at the cursor should qualify to pause typing.

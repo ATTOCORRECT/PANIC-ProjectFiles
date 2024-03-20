@@ -82,11 +82,8 @@ static func get_settings(only_keys: PackedStringArray = []) -> Dictionary:
 
 static func get_user_config() -> Dictionary:
 	var user_config: Dictionary = {
-		check_for_updates = true,
 		just_refreshed = null,
 		recent_files = [],
-		reopen_files = [],
-		most_recent_reopen_file = "",
 		carets = {},
 		run_title = "",
 		run_resource_path = "",
@@ -167,7 +164,7 @@ static func get_caret(path: String) -> Vector2:
 		return Vector2.ZERO
 
 
-static func has_dotnet_solution() -> bool:
+static func has_dot_net_solution() -> bool:
 	if get_user_value("has_dotnet_solution", false): return true
 
 	if ProjectSettings.has_setting("dotnet/project/solution_directory"):

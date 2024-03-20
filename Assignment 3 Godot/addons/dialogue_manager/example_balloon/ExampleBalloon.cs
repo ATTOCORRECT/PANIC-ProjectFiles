@@ -84,13 +84,19 @@ namespace DialogueManagerRuntime
         Next(response.NextId);
       }));
 
-      DialogueManager.Mutated += OnMutated;
-    }
-
-
-    public override void _ExitTree()
-    {
-      DialogueManager.Mutated -= OnMutated;
+      DialogueManager.Mutated += (mutation) =>
+      {
+        isWaitingForInput = false;
+        willHideBalloon = true;
+        GetTree().CreateTimer(0.1f).Timeout += () =>
+        {
+          if (willHideBalloon)
+          {
+            willHideBalloon = false;
+            balloon.Hide();
+          }
+        };
+      };
     }
 
 
@@ -171,27 +177,6 @@ namespace DialogueManagerRuntime
         balloon.FocusMode = Control.FocusModeEnum.All;
         balloon.GrabFocus();
       }
-    }
-
-
-    #endregion
-
-
-    #region signals
-
-
-    private void OnMutated(Dictionary _mutation)
-    {
-      isWaitingForInput = false;
-      willHideBalloon = true;
-      GetTree().CreateTimer(0.1f).Timeout += () =>
-      {
-        if (willHideBalloon)
-        {
-          willHideBalloon = false;
-          balloon.Hide();
-        }
-      };
     }
 
 
