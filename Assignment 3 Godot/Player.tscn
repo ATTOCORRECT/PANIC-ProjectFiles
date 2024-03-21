@@ -5,7 +5,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cqt3j"]
 radius = 15.0
-height = 68.0
+height = 60.0
 
 [sub_resource type="Animation" id="Animation_lpg8x"]
 resource_name = "attack_1"
@@ -157,13 +157,10 @@ _data = {
 script = ExtResource("1_24la8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, 0)
 shape = SubResource("CapsuleShape2D_cqt3j")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0, 1)
-scale = Vector2(1.11214, 1.07645)
 texture = ExtResource("2_js5e2")
 hframes = 7
 vframes = 6
