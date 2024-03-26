@@ -838,14 +838,32 @@ position = Vector2(610, -90)
 [node name="Actionables" parent="." instance=ExtResource("4_5e5ey")]
 dialogue_resource = ExtResource("5_btwar")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Actionables"]
+[node name="BottomDialogueBox" type="CollisionShape2D" parent="Actionables"]
 position = Vector2(221, -81.5)
 shape = SubResource("RectangleShape2D_el7q5")
 
-[node name="TextEdit" type="TextEdit" parent="."]
+[node name="BottomText" type="TextEdit" parent="."]
 offset_left = 86.0
 offset_top = -132.0
 offset_right = 357.0
 offset_bottom = -34.0
 text = "Hey! Press 'Enter' here for 
 dialogue!"
+
+[node name="TopText" type="TextEdit" parent="."]
+offset_left = 1462.0
+offset_top = -1222.0
+offset_right = 1733.0
+offset_bottom = -1124.0
+text = "Hey! Press 'Enter' here for 
+dialogue!"
+editable = false
+
+[node name="Actionables2" parent="." instance=ExtResource("4_5e5ey")]
+position = Vector2(1377, -1094)
+dialogue_resource = ExtResource("5_btwar")
+dialogue_start = "topBox"
+
+[node name="TopDialogueBox" type="CollisionShape2D" parent="Actionables2"]
+position = Vector2(221, -81.5)
+shape = SubResource("RectangleShape2D_el7q5")

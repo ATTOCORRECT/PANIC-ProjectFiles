@@ -10,3 +10,12 @@ Ninja Cat: Sometimes dialogue boxes will give you options on how to respond.
 Ninja Cat: Alright, let's get moving.
 
 => END
+
+~ topBox
+
+Ninja Cat: [[Good job|Wow|I'm surprised]], you're pretty skilled to get all the way up here.
+Ninja Cat: ....
+Ninja Cat: ...
+Ninja Cat: It's kind of lonely up here, huh?
+
+=> END
