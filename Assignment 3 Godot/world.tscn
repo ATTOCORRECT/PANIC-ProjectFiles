@@ -849,6 +849,7 @@ offset_right = 357.0
 offset_bottom = -34.0
 text = "Hey! Press 'Enter' here for 
 dialogue!"
+editable = false
 
 [node name="TopText" type="TextEdit" parent="."]
 offset_left = 1462.0
