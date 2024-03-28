@@ -7,9 +7,12 @@ const ACCELERATION = 3000.0 # units per tick ^2
 const FRICTION = 3000.0 # units per tick ^2
 const AIR_RESISTANCE = 1000.0 # units per tick ^2
 const JUMP_VELOCITY = 750.0
-const SWING_SPEED = 700.0
+const SWING_SPEED = 800.0
+const SWING_DEADZONE = 75
 
 var direction = 0
+
+var swingMagnitude = 0
 
 # vectors
 var cameraOriginalPosition = Vector2.ZERO
@@ -25,6 +28,7 @@ var inputJumpBuffered = false
 var isOnCoyoteFloor = true
 var isOnCoyoteWallOnly = false
 var isSprinting = false
+var sydneyMode = false   # makes the movement weird
 
 # music variables 
 var impactSoundHasPlayed
@@ -40,8 +44,19 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var actionable_finder: Area2D = $ActionableFinder
 
 func _draw(): # debug line stuff
+	if not sydneyMode:
+		if Input.is_action_pressed("swing_sword") and canSwing:
+			draw_circle(get_local_mouse_position(), 6, Color.WHITE)
+		else:
+			draw_circle(get_local_mouse_position(), 3, Color.WHITE)
+	
 	if Input.is_action_pressed("swing_sword") and canSwing:
-		draw_line(Vector2.ZERO,swingDirection * 100,Color.WHITE,1)
+		if not swingMagnitude > SWING_DEADZONE:
+			draw_arc(Vector2.ZERO, 40, 0, 360, 128, Color.RED, 1)
+			draw_arc(Vector2.ZERO, swingMagnitude / SWING_DEADZONE * 40, 0, 360, 128, Color.WHITE, 1)
+		else:
+			draw_line(swingDirection * 40, swingDirection * 100,Color.WHITE, 3)
+			draw_arc(Vector2.ZERO, 40, 0, 360, 128, Color.WHITE, 3)
 
 func _physics_process(delta): # physics update
 	# Add the gravity.
@@ -59,8 +74,7 @@ func _physics_process(delta): # physics update
 	move(delta)
 	jump(delta)
 	wallJump()
-	# wallSlide(delta) # not functional
-	
+	wallSlide(delta)
 	move_and_slide()
 	
 	# animations
@@ -69,7 +83,6 @@ func _physics_process(delta): # physics update
 			animation.play("fall")
 		
 	elif isOnCoyoteFloor:
-		
 		if direction and Input.is_action_pressed("sprint"):
 			animation.play("sprint")
 		elif direction:
@@ -86,27 +99,42 @@ func _physics_process(delta): # physics update
 	queue_redraw() # debug lines
 
 func sword(): # Handle Sword Dash
-	if Input.is_action_just_pressed("swing_sword"):
-		cameraOriginalPosition = $PlayerCamera.get_screen_center_position()
-		mouseOriginalPosition = get_global_mouse_position()
-	cameraPositionDelta = $PlayerCamera.get_screen_center_position() - cameraOriginalPosition
-	swingDirection = (get_global_mouse_position() - (mouseOriginalPosition + cameraPositionDelta)).normalized()
 	
+	# swing controll handling
+	var swingVector = Vector2.ZERO
+	if sydneyMode:
+		if Input.is_action_just_pressed("swing_sword"):
+			resetMousePosition()
+			cameraOriginalPosition = $PlayerCamera.get_screen_center_position()
+			mouseOriginalPosition = get_global_mouse_position()
+			
+		cameraPositionDelta = $PlayerCamera.get_screen_center_position() - cameraOriginalPosition
+		swingVector = (get_global_mouse_position() - (mouseOriginalPosition + cameraPositionDelta))
+		
+	else:
+		swingVector = get_local_mouse_position()
+	swingMagnitude = swingVector.length()
+	swingDirection = swingVector.normalized()
+	
+	# physics
 	if Input.is_action_just_released("swing_sword") and canSwing: # successful sword swing
-		if is_on_floor(): # flatten swing if on ground
-			swingDirection.y = 0
-			swingDirection.x = sign(swingDirection.x)
-		
-		Telemetry.log_event("", "Sword Swing Release", {position = position, 
-		timeSlow = Engine.time_scale < 1, swingDirection = swingDirection, 
-		onFloor = is_on_floor() })
-		
-		velocity = swingDirection * SWING_SPEED
-		move_and_collide(swingDirection)
 		canSwing = false
 		
-		animation.play("dash")
-		animation.queue("fall")
+		if swingMagnitude > SWING_DEADZONE :
+			
+			if is_on_floor(): # flatten swing if on ground
+				swingDirection.y = 0
+				swingDirection.x = sign(swingDirection.x)
+			
+			Telemetry.log_event("", "Sword Swing Release", {position = position, 
+			timeSlow = Engine.time_scale < 1, swingDirection = swingDirection, 
+			onFloor = is_on_floor() })
+			
+			velocity = swingDirection * SWING_SPEED 
+			move_and_collide(swingDirection * SWING_SPEED / 50)
+			
+			animation.play("dash")
+			animation.queue("fall")
 	
 	if Input.is_action_just_pressed("swing_sword") and canSwing:
 		
@@ -119,8 +147,9 @@ func sword(): # Handle Sword Dash
 	else:
 		Engine.time_scale = 1
 	
-	if isOnCoyoteFloor or isOnCoyoteWallOnly:
+	if isOnCoyoteFloor:
 		canSwing = true
+		pass
 
 func jump(delta): # Handle Jump
 	if inputJumpBuffered and isOnCoyoteFloor: # successful jump
@@ -148,7 +177,6 @@ func coyoteFloor(): # coyote time logic
 
 func wallJump(): # Handle Wall Jump
 	if inputJumpBuffered and isOnCoyoteWallOnly: # successful wall jump
-		
 		Telemetry.log_event("", "Wall Jump", {position = position})
 		
 		isOnCoyoteWallOnly = false
@@ -171,12 +199,14 @@ func coyoteWall(): # wall coyote time logic
 	if $WallCoyoteTimer.is_stopped():
 		isOnCoyoteWallOnly = false
 
-func wallSlide(delta): # not functional
+func wallSlide(delta):
 	if is_on_wall_only() and get_wall_normal().x * direction < 0:
-		velocity.y = velocity.y * 10 * delta * abs(get_wall_normal().x)
-		
-		# placeholder animation for when this is working
-		animation.play("wall_slide")
+		if velocity.y > 0: #only when going down
+			velocity.y -= gravity * delta
+			velocity.y = lerpf(velocity.y, 0, 10 * delta)
+			animation.play("wall_slide")
+		else:
+			animation.play("fall")
 
 func move(delta): # Get the input direction and handle the movement/deceleration
 	direction = Input.get_axis("move_left", "move_right")
@@ -253,3 +283,6 @@ func _unhandled_input(_event: InputEvent) -> void:
 			actionables[0].action()
 			return
 
+func resetMousePosition():
+	var screenMiddle = get_viewport().size / 2
+	get_viewport().warp_mouse(screenMiddle)
