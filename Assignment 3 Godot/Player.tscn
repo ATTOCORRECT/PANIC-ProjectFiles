@@ -167,7 +167,6 @@ vframes = 6
 frame = 35
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
-position_smoothing_enabled = true
 
 [node name="WallJumpInputSupresstionTimer" type="Timer" parent="."]
 process_callback = 0

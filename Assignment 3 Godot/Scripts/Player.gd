@@ -28,7 +28,7 @@ var inputJumpBuffered = false
 var isOnCoyoteFloor = true
 var isOnCoyoteWallOnly = false
 var isSprinting = false
-var sydneyMode = true   # makes the movement weird
+var sydneyMode = false   # makes the movement weird
 
 # music variables 
 var impactSoundHasPlayed
@@ -204,8 +204,9 @@ func wallSlide(delta):
 		if velocity.y > 0: #only when going down
 			velocity.y -= gravity * delta
 			velocity.y = lerpf(velocity.y, 0, 10 * delta)
-		# placeholder animation for when this is workingaa
-		animation.play("wall_slide")
+			animation.play("wall_slide")
+		else:
+			animation.play("fall")
 
 func move(delta): # Get the input direction and handle the movement/deceleration
 	direction = Input.get_axis("move_left", "move_right")
