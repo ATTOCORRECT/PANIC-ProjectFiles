@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b60ju5qti3kcf"]
+[gd_scene load_steps=11 format=3 uid="uid://b60ju5qti3kcf"]
 
 [ext_resource type="PackedScene" uid="uid://da31rdk83ydat" path="res://Player.tscn" id="1_171vc"]
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_ejcbv"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cpg2plfinqonv" path="res://telemetry_keylogger.tscn" id="4_0xcds"]
 [ext_resource type="PackedScene" uid="uid://dim0pdywwiakw" path="res://actionables.tscn" id="4_5e5ey"]
 [ext_resource type="Resource" uid="uid://cyif4bdh1k5k1" path="res://playtestingDialogue.dialogue" id="5_btwar"]
+[ext_resource type="AudioStream" uid="uid://ctnapcofs5b6h" path="res://musicStuff/Design Practice Menu Theme.mp3" id="7_nhiw8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_riign"]
 texture = ExtResource("3_0mqm2")
@@ -874,3 +875,7 @@ dialogue_start = "topBox"
 [node name="TopDialogueBox" type="CollisionShape2D" parent="Actionables2"]
 position = Vector2(221, -81.5)
 shape = SubResource("RectangleShape2D_el7q5")
+
+[node name="InGameTheme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_nhiw8")
+autoplay = true

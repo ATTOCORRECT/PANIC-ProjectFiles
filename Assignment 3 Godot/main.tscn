@@ -15,7 +15,7 @@ offset_right = 709.0
 offset_bottom = 317.0
 text = "Play"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Play"]
+[node name="PlayButtonSound" type="AudioStreamPlayer" parent="Play"]
 stream = ExtResource("2_8cfth")
 
 [node name="Quit" type="Button" parent="."]
@@ -25,7 +25,7 @@ offset_right = 709.0
 offset_bottom = 452.0
 text = "Quit"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Quit"]
+[node name="QuitButtonSound" type="AudioStreamPlayer" parent="Quit"]
 stream = ExtResource("2_8cfth")
 
 [node name="SessionInfo" type="Label" parent="."]
@@ -37,7 +37,7 @@ text = "Test"
 
 [node name="TelemetryKeylogger" parent="." instance=ExtResource("2_rhece")]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="MainMenuMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_lag4c")
 
 [connection signal="button_down" from="Play" to="." method="_on_play_button_down"]

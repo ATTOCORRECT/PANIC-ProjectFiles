@@ -29,6 +29,7 @@ var isOnCoyoteFloor = true
 var isOnCoyoteWallOnly = false
 var isSprinting = false
 var sydneyMode = false   # makes the movement weird
+var wasOnFloor = false #to log singular collisions with the floor
 
 # music variables 
 var impactSoundHasPlayed
@@ -97,6 +98,10 @@ func _physics_process(delta): # physics update
 		sprite.flip_h = false
 	
 	queue_redraw() # debug lines
+func _process(delta):
+	playerImpactSound()
+	walkingSound()
+	pass
 
 func sword(): # Handle Sword Dash
 	
@@ -271,11 +276,16 @@ func groundFriction(delta): # ground slow down
 func airResistance(delta): # air slow down
 	velocity.x = move_toward(velocity.x, 0, AIR_RESISTANCE * delta)
 	
-func playerImpactSound(delta): ##playing the player impact sound
-	if is_on_floor:
-		$PlayerImpactSoundPlayer.play()
-		impactSoundHasPlayed = true
-		
+func playerImpactSound(): ##playing the player impact sound
+	if !wasOnFloor and isOnCoyoteFloor:
+		$PlayerSoundPlayers/ImpactSound.play()
+		pass
+	wasOnFloor = isOnCoyoteFloor
+
+func walkingSound():
+	##$PlayerSoundPlayers/WalkingSound.play()
+	pass
+	
 func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_accept"):
 		var actionables = actionable_finder.get_overlapping_areas()

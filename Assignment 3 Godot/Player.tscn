@@ -1,7 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://da31rdk83ydat"]
+[gd_scene load_steps=16 format=3 uid="uid://da31rdk83ydat"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_24la8"]
 [ext_resource type="Texture2D" uid="uid://qf1nkrtiud6f" path="res://sprite_sheet.png" id="2_js5e2"]
+[ext_resource type="AudioStream" uid="uid://c01mhbuumea10" path="res://musicStuff/PlayerImpactSound.mp3" id="3_sk236"]
+[ext_resource type="AudioStream" uid="uid://ctnapcofs5b6h" path="res://musicStuff/Design Practice Menu Theme.mp3" id="4_ogxfb"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cqt3j"]
 radius = 15.0
@@ -164,7 +166,7 @@ texture_filter = 1
 texture = ExtResource("2_js5e2")
 hframes = 7
 vframes = 6
-frame = 35
+frame = 1
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
 
@@ -199,3 +201,11 @@ collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActionableFinder"]
 shape = SubResource("CapsuleShape2D_wefgl")
+
+[node name="PlayerSoundPlayers" type="Node" parent="."]
+
+[node name="ImpactSound" type="AudioStreamPlayer" parent="PlayerSoundPlayers"]
+stream = ExtResource("3_sk236")
+
+[node name="WalkingSound" type="AudioStreamPlayer" parent="PlayerSoundPlayers"]
+stream = ExtResource("4_ogxfb")
