@@ -28,3 +28,13 @@ func _on_authenticated(success, info):
 			$SessionInfo.text = "Server Session #" + str(info)
 	else:
 		$SessionInfo.text = str(info)
+
+
+func _on_play_button_down():
+	$Play/AudioStreamPlayer.play()
+	pass # Replace with function body.
+
+
+func _on_quit_button_down():
+	$Quit/AudioStreamPlayer.play()
+	pass # Replace with function body.

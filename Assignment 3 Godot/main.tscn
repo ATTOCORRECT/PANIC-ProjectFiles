@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dtgx3y0ckm1o3"]
+[gd_scene load_steps=5 format=3 uid="uid://dtgx3y0ckm1o3"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_yh0t8"]
+[ext_resource type="AudioStream" uid="uid://c01mhbuumea10" path="res://musicStuff/PlayerImpactSound.mp3" id="2_8cfth"]
 [ext_resource type="PackedScene" uid="uid://cpg2plfinqonv" path="res://telemetry_keylogger.tscn" id="2_rhece"]
+[ext_resource type="AudioStream" uid="uid://ctnapcofs5b6h" path="res://musicStuff/Design Practice Menu Theme.mp3" id="3_lag4c"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_yh0t8")
@@ -13,12 +15,18 @@ offset_right = 709.0
 offset_bottom = 317.0
 text = "Play"
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Play"]
+stream = ExtResource("2_8cfth")
+
 [node name="Quit" type="Button" parent="."]
 offset_left = 430.0
 offset_top = 340.0
 offset_right = 709.0
 offset_bottom = 452.0
 text = "Quit"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Quit"]
+stream = ExtResource("2_8cfth")
 
 [node name="SessionInfo" type="Label" parent="."]
 offset_left = 22.0
@@ -29,5 +37,10 @@ text = "Test"
 
 [node name="TelemetryKeylogger" parent="." instance=ExtResource("2_rhece")]
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_lag4c")
+
+[connection signal="button_down" from="Play" to="." method="_on_play_button_down"]
 [connection signal="button_up" from="Play" to="." method="_on_play_button_up"]
+[connection signal="button_down" from="Quit" to="." method="_on_quit_button_down"]
 [connection signal="button_up" from="Quit" to="." method="_on_quit_button_up"]
