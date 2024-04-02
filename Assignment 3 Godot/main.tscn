@@ -7,25 +7,26 @@
 script = ExtResource("1_yh0t8")
 
 [node name="Play" type="Button" parent="."]
-offset_left = 320.0
+offset_left = 384.0
 offset_top = 128.0
 offset_right = 576.0
 offset_bottom = 256.0
 text = "Play"
 
 [node name="Quit" type="Button" parent="."]
-offset_left = 320.0
+offset_left = 384.0
 offset_top = 320.0
 offset_right = 576.0
 offset_bottom = 448.0
 text = "Quit"
 
 [node name="SessionInfo" type="Label" parent="."]
-offset_left = 22.0
-offset_top = 18.0
-offset_right = 63.0
-offset_bottom = 46.0
+offset_left = 8.0
+offset_top = 496.0
+offset_right = 952.0
+offset_bottom = 536.0
 text = "Test"
+vertical_alignment = 2
 
 [node name="TelemetryKeylogger" parent="." instance=ExtResource("2_rhece")]
 
