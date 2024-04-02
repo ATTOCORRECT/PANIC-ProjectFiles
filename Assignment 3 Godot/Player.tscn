@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://qf1nkrtiud6f" path="res://sprite_sheet.png" id="2_js5e2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cqt3j"]
-radius = 15.0
+radius = 11.0
 height = 60.0
 
 [sub_resource type="Animation" id="Animation_lpg8x"]
