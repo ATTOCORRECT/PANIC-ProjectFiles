@@ -1330,9 +1330,11 @@ sources/0 = SubResource("TileSetAtlasSource_lih5t")
 size = Vector2(269, 99)
 
 [node name="World" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_ejcbv")
 
 [node name="Level" type="Node2D" parent="."]
+process_mode = 1
 
 [node name="TileMap" type="TileMap" parent="Level"]
 position = Vector2(160, -610)

@@ -138,7 +138,7 @@ func sword(): # Handle Sword Dash
 	
 	if Input.is_action_pressed("swing_sword") and canSwing and not is_on_floor():
 		Engine.time_scale = 0.1
-	else:
+	elif Engine.time_scale == 0.1:
 		Engine.time_scale = 1
 	
 	if isOnCoyoteFloor:
