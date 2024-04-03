@@ -1396,16 +1396,11 @@ editable = false
 position = Vector2(221, -81.5)
 shape = SubResource("RectangleShape2D_el7q5")
 
-[node name="Actionables3" parent="Level/Dialogue" instance=ExtResource("4_5e5ey")]
-position = Vector2(1377, -1094)
-dialogue_resource = ExtResource("5_btwar")
-dialogue_start = "topBox"
-
-[node name="TopText" type="TextEdit" parent="Level/Dialogue/Actionables3"]
-offset_left = 10739.0
-offset_top = 480.0
-offset_right = 11010.0
-offset_bottom = 578.0
+[node name="TopText2" type="TextEdit" parent="."]
+offset_left = 12116.0
+offset_top = -614.0
+offset_right = 12387.0
+offset_bottom = -516.0
 text = "You made it to the end!
  But can you get back?"
 editable = false

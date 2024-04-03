@@ -19,3 +19,13 @@ Ninja Cat: ...
 Ninja Cat: It's kind of lonely up here, huh?
 
 => END
+
+~ firstNPC
+
+Stranger: [[Hey!|Aww...|Woah!]] A litle kitty cat! 
+Stranger: Who gave you a sword?
+Ninja Cat: I will end you. 
+Stranger: WOAH! You can talk!?
+Ninja Cat: I hate it here...
+
+=> END 
