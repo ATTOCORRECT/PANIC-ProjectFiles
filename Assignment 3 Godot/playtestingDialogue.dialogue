@@ -22,10 +22,19 @@ Ninja Cat: It's kind of lonely up here, huh?
 
 ~ firstNPC
 
-Stranger: [[Hey!|Aww...|Woah!]] A litle kitty cat! 
-Stranger: Who gave you a sword?
-Ninja Cat: I will end you. 
-Stranger: WOAH! You can talk!?
-Ninja Cat: I hate it here...
+Stranger: [[Oh,|Aww,|Woah,]] 'ey there little guy, you lost or somethin'? 
+Stranger: What's with the getup? 
+Stranger: And the sword...
+Ninja Cat: None of your concern. 
+Stranger: Geez 'lil kitty put the claws away, I'm just askin' a question...
+- I have more important things to attend to
+	Ninja Cat: I have more important things to attend to than answering your questions.
+	Stranger: Asshole...
+- Get lost
+	Ninja Cat: You thick in the head? Get lost.
+	Stranger: Who shit in your cereal this morning? 
+- Out of the way
+	Ninja Cat: Get out of my way, I don't have time to chat with stray dogs
+	Stranger: Watch it, shortstack...
 
 => END 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b60ju5qti3kcf"]
+[gd_scene load_steps=14 format=3 uid="uid://b60ju5qti3kcf"]
 
 [ext_resource type="PackedScene" uid="uid://da31rdk83ydat" path="res://Player.tscn" id="1_171vc"]
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_ejcbv"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dim0pdywwiakw" path="res://actionables.tscn" id="4_5e5ey"]
 [ext_resource type="Resource" uid="uid://cyif4bdh1k5k1" path="res://playtestingDialogue.dialogue" id="5_btwar"]
 [ext_resource type="PackedScene" uid="uid://ncy0juut3ugl" path="res://pause_menu.tscn" id="8_mpjbi"]
+[ext_resource type="Texture2D" uid="uid://b2q61qx0i22t6" path="res://Assets/Sprites/NPC_Dog.png" id="9_kvtfe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lih5t"]
 texture = ExtResource("2_d242s")
@@ -1342,7 +1343,7 @@ sources/4 = SubResource("TileSetAtlasSource_riign")
 sources/0 = SubResource("TileSetAtlasSource_lih5t")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_el7q5"]
-size = Vector2(269, 99)
+size = Vector2(154.5, 99)
 
 [node name="World" type="Node2D"]
 process_mode = 3
@@ -1396,6 +1397,23 @@ editable = false
 position = Vector2(221, -81.5)
 shape = SubResource("RectangleShape2D_el7q5")
 
+[node name="Actionables3" parent="Level/Dialogue" instance=ExtResource("4_5e5ey")]
+position = Vector2(3142, -571)
+dialogue_resource = ExtResource("5_btwar")
+dialogue_start = "firstNPC"
+
+[node name="TopDialogueBox" type="CollisionShape2D" parent="Level/Dialogue/Actionables3"]
+position = Vector2(222, 12)
+shape = SubResource("RectangleShape2D_el7q5")
+
+[node name="TextEdit" type="TextEdit" parent="Level/Dialogue/Actionables3"]
+offset_left = 191.0
+offset_top = -74.0
+offset_right = 249.0
+offset_bottom = -38.0
+text = "Enter"
+editable = false
+
 [node name="TopText2" type="TextEdit" parent="."]
 offset_left = 12116.0
 offset_top = -614.0
@@ -1418,3 +1436,7 @@ offset_top = 448.0
 offset_right = 952.0
 offset_bottom = 536.0
 vertical_alignment = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(3362, -553)
+texture = ExtResource("9_kvtfe")
