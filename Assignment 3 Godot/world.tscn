@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b60ju5qti3kcf"]
+[gd_scene load_steps=16 format=3 uid="uid://b60ju5qti3kcf"]
 
 [ext_resource type="PackedScene" uid="uid://da31rdk83ydat" path="res://Player.tscn" id="1_171vc"]
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_ejcbv"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://ncy0juut3ugl" path="res://pause_menu.tscn" id="8_mpjbi"]
 [ext_resource type="Texture2D" uid="uid://b2q61qx0i22t6" path="res://Assets/Sprites/NPC_Dog.png" id="9_kvtfe"]
 [ext_resource type="Texture2D" uid="uid://cgd3p2ttx5ryp" path="res://Assets/Sprites/NPC_Rat.png" id="10_f62bg"]
+[ext_resource type="Texture2D" uid="uid://c7jt8fqtjqtc5" path="res://Assets/Sprites/NPC_Raccoon.png" id="11_bw1xy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lih5t"]
 texture = ExtResource("2_d242s")
@@ -1432,6 +1433,23 @@ offset_bottom = -38.0
 text = "Enter"
 editable = false
 
+[node name="Actionables5" parent="Level/Dialogue" instance=ExtResource("4_5e5ey")]
+position = Vector2(9764, -683)
+dialogue_resource = ExtResource("5_btwar")
+dialogue_start = "thirdNPC"
+
+[node name="TopDialogueBox" type="CollisionShape2D" parent="Level/Dialogue/Actionables5"]
+position = Vector2(222, 12)
+shape = SubResource("RectangleShape2D_el7q5")
+
+[node name="TextEdit" type="TextEdit" parent="Level/Dialogue/Actionables5"]
+offset_left = 191.0
+offset_top = -74.0
+offset_right = 249.0
+offset_bottom = -38.0
+text = "Enter"
+editable = false
+
 [node name="TopText2" type="TextEdit" parent="."]
 offset_left = 12116.0
 offset_top = -614.0
@@ -1462,3 +1480,7 @@ texture = ExtResource("9_kvtfe")
 [node name="RatNPC" type="Sprite2D" parent="."]
 position = Vector2(6963, -1026)
 texture = ExtResource("10_f62bg")
+
+[node name="RaccoonNPC" type="Sprite2D" parent="."]
+position = Vector2(9983, -657)
+texture = ExtResource("11_bw1xy")

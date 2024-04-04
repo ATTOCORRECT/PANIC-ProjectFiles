@@ -59,3 +59,19 @@ Knight: Halt! What business doth thou have here?
 	Knight: Best of luck to you, mine friend! 
 
 => END
+
+~ thirdNPC
+
+Thug: The hell do you want?
+- Nevermind
+	Ninja Cat: Nothing, forget I said anything.
+	Thug: Then quit wasting my time.
+- Watch your attitude
+	Ninja Cat: Watch your tongue, dumpster diver...
+	Thug: You trying to get shot or something?
+	Thug: You better watch yourself on these streets, cat. 
+	Ninja Cat: You and your little gangs do not scare me. 
+	Ninja Cat: My blade is sharp, and I am quick. 
+	Thug: Tch. Whatever. 
+
+=> END
