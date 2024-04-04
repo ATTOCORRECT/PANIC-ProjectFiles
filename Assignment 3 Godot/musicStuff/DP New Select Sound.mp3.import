@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cti1uufhmjo6a"
+path="res://.godot/imported/DP New Select Sound.mp3-a13bb38050e07436d624d7ccb7b67788.mp3str"
+
+[deps]
+
+source_file="res://musicStuff/DP New Select Sound.mp3"
+dest_files=["res://.godot/imported/DP New Select Sound.mp3-a13bb38050e07436d624d7ccb7b67788.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

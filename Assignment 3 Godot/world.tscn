@@ -1,12 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://b60ju5qti3kcf"]
+[gd_scene load_steps=10 format=3 uid="uid://b60ju5qti3kcf"]
 
 [ext_resource type="PackedScene" uid="uid://da31rdk83ydat" path="res://Player.tscn" id="1_171vc"]
-[ext_resource type="Script" path="res://Scripts/world.gd" id="1_ejcbv"]
 [ext_resource type="Texture2D" uid="uid://j67r60fwk2jq" path="res://tilesheet_complete.png" id="3_0mqm2"]
 [ext_resource type="PackedScene" uid="uid://cpg2plfinqonv" path="res://telemetry_keylogger.tscn" id="4_0xcds"]
 [ext_resource type="PackedScene" uid="uid://dim0pdywwiakw" path="res://actionables.tscn" id="4_5e5ey"]
 [ext_resource type="Resource" uid="uid://cyif4bdh1k5k1" path="res://playtestingDialogue.dialogue" id="5_btwar"]
-[ext_resource type="AudioStream" uid="uid://ctnapcofs5b6h" path="res://musicStuff/Design Practice Menu Theme.mp3" id="7_nhiw8"]
+[ext_resource type="AudioStream" uid="uid://711us6m3msua" path="res://musicStuff/In-Game Theme.mp3" id="7_wklel"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_riign"]
 texture = ExtResource("3_0mqm2")
@@ -827,7 +826,6 @@ sources/4 = SubResource("TileSetAtlasSource_riign")
 size = Vector2(269, 99)
 
 [node name="World" type="Node2D"]
-script = ExtResource("1_ejcbv")
 
 [node name="Level" type="Node2D" parent="."]
 
@@ -877,5 +875,6 @@ position = Vector2(221, -81.5)
 shape = SubResource("RectangleShape2D_el7q5")
 
 [node name="InGameTheme" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_nhiw8")
+stream = ExtResource("7_wklel")
+volume_db = -14.053
 autoplay = true

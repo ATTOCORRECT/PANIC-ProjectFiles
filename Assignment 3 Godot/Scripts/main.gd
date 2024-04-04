@@ -31,10 +31,10 @@ func _on_authenticated(success, info):
 
 
 func _on_play_button_down():
-	$Play/AudioStreamPlayer.play()
+	$"Play/PlayButtonSound".play()
 	pass # Replace with function body.
 
 
 func _on_quit_button_down():
-	$Quit/AudioStreamPlayer.play()
+	$"Quit/QuitButtonSound".play()
 	pass # Replace with function body.
