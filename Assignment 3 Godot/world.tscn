@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b60ju5qti3kcf"]
+[gd_scene load_steps=15 format=3 uid="uid://b60ju5qti3kcf"]
 
 [ext_resource type="PackedScene" uid="uid://da31rdk83ydat" path="res://Player.tscn" id="1_171vc"]
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_ejcbv"]
@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://cyif4bdh1k5k1" path="res://playtestingDialogue.dialogue" id="5_btwar"]
 [ext_resource type="PackedScene" uid="uid://ncy0juut3ugl" path="res://pause_menu.tscn" id="8_mpjbi"]
 [ext_resource type="Texture2D" uid="uid://b2q61qx0i22t6" path="res://Assets/Sprites/NPC_Dog.png" id="9_kvtfe"]
+[ext_resource type="Texture2D" uid="uid://cgd3p2ttx5ryp" path="res://Assets/Sprites/NPC_Rat.png" id="10_f62bg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lih5t"]
 texture = ExtResource("2_d242s")
@@ -1414,6 +1415,23 @@ offset_bottom = -38.0
 text = "Enter"
 editable = false
 
+[node name="Actionables4" parent="Level/Dialogue" instance=ExtResource("4_5e5ey")]
+position = Vector2(6747, -1068)
+dialogue_resource = ExtResource("5_btwar")
+dialogue_start = "secondNPC"
+
+[node name="TopDialogueBox" type="CollisionShape2D" parent="Level/Dialogue/Actionables4"]
+position = Vector2(222, 12)
+shape = SubResource("RectangleShape2D_el7q5")
+
+[node name="TextEdit" type="TextEdit" parent="Level/Dialogue/Actionables4"]
+offset_left = 191.0
+offset_top = -74.0
+offset_right = 249.0
+offset_bottom = -38.0
+text = "Enter"
+editable = false
+
 [node name="TopText2" type="TextEdit" parent="."]
 offset_left = 12116.0
 offset_top = -614.0
@@ -1437,6 +1455,10 @@ offset_right = 952.0
 offset_bottom = 536.0
 vertical_alignment = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="DogNPC" type="Sprite2D" parent="."]
 position = Vector2(3362, -553)
 texture = ExtResource("9_kvtfe")
+
+[node name="RatNPC" type="Sprite2D" parent="."]
+position = Vector2(6963, -1026)
+texture = ExtResource("10_f62bg")

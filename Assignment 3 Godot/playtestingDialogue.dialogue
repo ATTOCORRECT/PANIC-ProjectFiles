@@ -38,3 +38,24 @@ Stranger: Geez 'lil kitty put the claws away, I'm just askin' a question...
 	Stranger: Watch it, shortstack...
 
 => END 
+
+~ secondNPC
+
+Knight: Halt! What business doth thou have here?
+- Just passing through 
+	Ninja Cat: Simply passing through.
+	Knight: Art thou a force of evil? Thine garb perplexes me...
+	Ninja Cat: I am not evil, just a ninja.
+	Knight: Hm.. curious. 
+	Knight: Thou shall stay on thine best behaviour? 
+	Ninja Cat: ... Sure.
+	Knight: Splended! Thou shall pass. 
+	Ninja Cat: Thank you, brave rat. 
+- I have an evil wizard to kill
+	Ninja Cat: I have my sights set on revenge, I need to kill that evil wizard.
+	Knight: A valliant and noble cause, that foul wizard brings evil to these fine lands.
+	Ninja Cat: He will get what's coming for him. 
+	Knight: Thou appears to have the fortitude to acomplish thine mission..
+	Knight: Best of luck to you, mine friend! 
+
+=> END
