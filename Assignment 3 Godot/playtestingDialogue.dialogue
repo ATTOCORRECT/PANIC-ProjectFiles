@@ -19,3 +19,59 @@ Ninja Cat: ...
 Ninja Cat: It's kind of lonely up here, huh?
 
 => END
+
+~ firstNPC
+
+Stranger: [[Oh,|Aww,|Woah,]] 'ey there little guy, you lost or somethin'? 
+Stranger: What's with the getup? 
+Stranger: And the sword...
+Ninja Cat: None of your concern. 
+Stranger: Geez 'lil kitty put the claws away, I'm just askin' a question...
+- I have more important things to attend to
+	Ninja Cat: I have more important things to attend to than answering your questions.
+	Stranger: Asshole...
+- Get lost
+	Ninja Cat: You thick in the head? Get lost.
+	Stranger: Who shit in your cereal this morning? 
+- Out of the way
+	Ninja Cat: Get out of my way, I don't have time to chat with stray dogs
+	Stranger: Watch it, shortstack...
+
+=> END 
+
+~ secondNPC
+
+Knight: Halt! What business doth thou have here?
+- Just passing through 
+	Ninja Cat: Simply passing through.
+	Knight: Art thou a force of evil? Thine garb perplexes me...
+	Ninja Cat: I am not evil, just a ninja.
+	Knight: Hm.. curious. 
+	Knight: Thou shall stay on thine best behaviour? 
+	Ninja Cat: ... Sure.
+	Knight: Splended! Thou shall pass. 
+	Ninja Cat: Thank you, brave rat. 
+- I have an evil wizard to kill
+	Ninja Cat: I have my sights set on revenge, I need to kill that evil wizard.
+	Knight: A valliant and noble cause, that foul wizard brings evil to these fine lands.
+	Ninja Cat: He will get what's coming for him. 
+	Knight: Thou appears to have the fortitude to acomplish thine mission..
+	Knight: Best of luck to you, mine friend! 
+
+=> END
+
+~ thirdNPC
+
+Thug: The hell do you want?
+- Nevermind
+	Ninja Cat: Nothing, forget I said anything.
+	Thug: Then quit wasting my time.
+- Watch your attitude
+	Ninja Cat: Watch your tongue, dumpster diver...
+	Thug: You trying to get shot or something?
+	Thug: You better watch yourself on these streets, cat. 
+	Ninja Cat: You and your little gangs do not scare me. 
+	Ninja Cat: My blade is sharp, and I am quick. 
+	Thug: Tch. Whatever. 
+
+=> END

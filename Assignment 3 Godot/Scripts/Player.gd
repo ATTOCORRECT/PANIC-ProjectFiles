@@ -3,8 +3,8 @@ extends CharacterBody2D
 # constants
 const MAX_SPEED = 600.0 # units per tick
 const MAX_WALK_SPEED = 300.0 # units per tick
-const ACCELERATION = 3000.0 # units per tick ^2
-const FRICTION = 3000.0 # units per tick ^2
+const ACCELERATION = 5000.0 # units per tick ^2
+const FRICTION = 5000.0 # units per tick ^2
 const AIR_RESISTANCE = 1000.0 # units per tick ^2
 const JUMP_VELOCITY = 750.0
 const SWING_SPEED = 800.0
@@ -45,12 +45,6 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var actionable_finder: Area2D = $ActionableFinder
 
 func _draw(): # debug line stuff
-	if not sydneyMode:
-		if Input.is_action_pressed("swing_sword") and canSwing:
-			draw_circle(get_local_mouse_position(), 6, Color.WHITE)
-		else:
-			draw_circle(get_local_mouse_position(), 3, Color.WHITE)
-	
 	if Input.is_action_pressed("swing_sword") and canSwing:
 		if not swingMagnitude > SWING_DEADZONE:
 			draw_arc(Vector2.ZERO, 40, 0, 360, 128, Color.RED, 1)
@@ -149,7 +143,7 @@ func sword(): # Handle Sword Dash
 	
 	if Input.is_action_pressed("swing_sword") and canSwing and not is_on_floor():
 		Engine.time_scale = 0.1
-	else:
+	elif Engine.time_scale == 0.1:
 		Engine.time_scale = 1
 	
 	if isOnCoyoteFloor:
@@ -267,7 +261,7 @@ func walkMove(delta, maxSpeed): # walking & running
 	velocity.y = velocity.x / get_floor_normal().y * get_floor_normal().x * -1 +100 
 
 func airMove(delta): # air control
-	if velocity.x * direction < MAX_SPEED:
+	if velocity.x * direction < MAX_WALK_SPEED:
 		velocity.x = move_toward(velocity.x, direction * MAX_SPEED, ACCELERATION * delta)
 
 func groundFriction(delta): # ground slow down
