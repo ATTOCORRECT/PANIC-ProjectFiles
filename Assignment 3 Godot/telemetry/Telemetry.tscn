@@ -6,7 +6,7 @@
 script = ExtResource("1_mu8ae")
 user_name = "P.A.N.I.C."
 secret = "variation cause"
-version = "playtest-1"
+version = "playtest-3"
 default_section = "Menu"
 debug_print = false
 
