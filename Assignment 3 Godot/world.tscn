@@ -7,11 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://cpg2plfinqonv" path="res://telemetry_keylogger.tscn" id="4_0xcds"]
 [ext_resource type="PackedScene" uid="uid://dim0pdywwiakw" path="res://actionables.tscn" id="4_5e5ey"]
 [ext_resource type="Resource" uid="uid://cyif4bdh1k5k1" path="res://playtestingDialogue.dialogue" id="5_btwar"]
-[ext_resource type="PackedScene" path="res://pause_menu.tscn" id="8_mpjbi"]
+[ext_resource type="PackedScene" uid="uid://ncy0juut3ugl" path="res://pause_menu.tscn" id="8_mpjbi"]
 [ext_resource type="Texture2D" uid="uid://b2q61qx0i22t6" path="res://Assets/Sprites/NPC_Dog.png" id="9_kvtfe"]
 [ext_resource type="Texture2D" uid="uid://cgd3p2ttx5ryp" path="res://Assets/Sprites/NPC_Rat.png" id="10_f62bg"]
 [ext_resource type="Texture2D" uid="uid://c7jt8fqtjqtc5" path="res://Assets/Sprites/NPC_Raccoon.png" id="11_bw1xy"]
-[ext_resource type="Texture2D" path="res://BackgroundTileset_64x64.png" id="13_7xr61"]
+[ext_resource type="Texture2D" uid="uid://byppq0d3iscti" path="res://BackgroundTileset_64x64.png" id="13_7xr61"]
 [ext_resource type="Texture2D" uid="uid://dbbaix2k714is" path="res://Background 1.png" id="13_tlv8k"]
 [ext_resource type="Texture2D" uid="uid://dp6iu8v7n5muf" path="res://background2.png" id="14_45jru"]
 
