@@ -207,6 +207,7 @@ shape = SubResource("CapsuleShape2D_wefgl")
 
 [node name="ImpactSound" type="AudioStreamPlayer" parent="PlayerSoundPlayers"]
 stream = ExtResource("3_sk236")
+volume_db = -30.0
 
 [node name="WalkingSound" type="AudioStreamPlayer" parent="PlayerSoundPlayers"]
 stream = ExtResource("4_ogxfb")

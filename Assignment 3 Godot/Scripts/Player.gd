@@ -31,6 +31,9 @@ var isSprinting = false
 var sydneyMode = false   # makes the movement weird
 var wasOnFloor = false #to log singular collisions with the floor
 
+# anim state
+var animationState = "default"
+
 # music variables 
 var impactSoundHasPlayed
 
@@ -54,10 +57,15 @@ func _draw(): # debug line stuff
 			draw_arc(Vector2.ZERO, 40, 0, 360, 128, Color.WHITE, 3)
 
 func _physics_process(delta): # physics update
+	
+	if is_on_floor():
+		animationState = "idle"
+	
+	if !is_on_floor() and canSwing:
+		animationState = "fall"
+	
 	# Add the gravity.
 	velocity.y += gravity * delta
-	
-
 	
 	# buffers
 	coyoteFloor()
@@ -72,30 +80,39 @@ func _physics_process(delta): # physics update
 	wallSlide(delta)
 	move_and_slide()
 	
-	# animations
-	if not isOnCoyoteFloor:
-		if canSwing:
-			animation.play("fall")
-		
-	elif isOnCoyoteFloor:
-		if direction and Input.is_action_pressed("sprint"):
-			animation.play("sprint")
-		elif direction:
-			animation.play("walk")
-		else:
-			animation.play("idle")
+	queue_redraw() # debug lines
+
+func _process(delta):
+	playerImpactSound()
+	walkingSound()
 	
-	# flip sprite
+	# Animations
+	
+	match animationState:
+		"walk":
+			animation.play("walk")
+		"sprint":
+			animation.play("sprint")
+		"dash":
+			animationState = ""
+			animation.play("dash")
+			animation.queue("fall")
+		"fall":
+			animation.play("fall")
+		"wall_slide":
+			animation.play("wall_slide")
+		"idle":
+			animation.play("idle")
+		_:
+			pass
+	
+
+		# flip sprite
 	if Input.is_action_pressed("move_left"):
 		sprite.flip_h = true
 	elif Input.is_action_pressed("move_right"):
 		sprite.flip_h = false
-	
-	queue_redraw() # debug lines
-func _process(delta):
-	playerImpactSound()
-	walkingSound()
-	pass
+
 
 func sword(): # Handle Sword Dash
 	
@@ -132,8 +149,7 @@ func sword(): # Handle Sword Dash
 			velocity = swingDirection * SWING_SPEED 
 			move_and_collide(swingDirection * SWING_SPEED / 50)
 			
-			animation.play("dash")
-			animation.queue("fall")
+			animationState = "dash"
 	
 	if Input.is_action_just_pressed("swing_sword") and canSwing:
 		
@@ -178,6 +194,8 @@ func wallJump(): # Handle Wall Jump
 	if inputJumpBuffered and isOnCoyoteWallOnly: # successful wall jump
 		Telemetry.log_event("", "Wall Jump", {position = position})
 		
+		animationState = "fall"
+		
 		isOnCoyoteWallOnly = false
 		velocity += (Vector2.UP + Vector2.RIGHT * get_wall_normal().x).normalized() * JUMP_VELOCITY
 		
@@ -199,13 +217,12 @@ func coyoteWall(): # wall coyote time logic
 		isOnCoyoteWallOnly = false
 
 func wallSlide(delta):
-	if is_on_wall_only() and get_wall_normal().x * direction < 0:
+	if is_on_wall_only() and get_wall_normal().x * direction < 0: # succesfull wall slide
 		if velocity.y > 0: #only when going down
+			animationState = "wall_slide"
+			
 			velocity.y -= gravity * delta
 			velocity.y = lerpf(velocity.y, 0, 10 * delta)
-			animation.play("wall_slide")
-		else:
-			animation.play("fall")
 
 func move(delta): # Get the input direction and handle the movement/deceleration
 	direction = Input.get_axis("move_left", "move_right")
@@ -213,8 +230,10 @@ func move(delta): # Get the input direction and handle the movement/deceleration
 	if direction and canMove:
 		if is_on_floor():
 			if Input.is_action_pressed("sprint"):
+				animationState = "sprint"
 				walkMove(delta, MAX_SPEED) # running
 			else:
+				animationState = "walk"
 				walkMove(delta, MAX_WALK_SPEED) # walking
 		else:
 			airMove(delta)
